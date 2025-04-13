@@ -1,102 +1,103 @@
--- Enable both absolute and relative line numbers
+vim.opt.clipboard = 'unnamedplus'
+
 vim.o.number = true
 vim.o.relativenumber = true
 vim.g.mapleader = ' '
 
-
--- Ensure packer.nvim is installed and loaded
 vim.cmd [[packadd packer.nvim]]
-
--- Plugin Setup with packer.nvim
 require('packer').startup(function(use)
-  -- Let packer manage itself
   use 'wbthomason/packer.nvim'
-  
-  -- LSP configurations
   use 'neovim/nvim-lspconfig'
-  
-  -- Completion engine and sources
-  use 'hrsh7th/nvim-cmp'               -- Completion engine
-  use 'hrsh7th/cmp-nvim-lsp'           -- LSP completion source
-  use 'hrsh7th/cmp-buffer'             -- Buffer completions
-  use 'hrsh7th/cmp-path'               -- Filesystem paths completions
-  
-  -- Snippet support (optional but recommended)
-  use 'L3MON4D3/LuaSnip'               -- Snippet engine
-  use 'saadparwaiz1/cmp_luasnip'       -- Snippet completions
-  use 'navarasu/onedark.nvim'
-
-  use 'CRAG666/code_runner.nvim'
-
+  use 'hrsh7th/nvim-cmp'
+  use 'hrsh7th/cmp-nvim-lsp'
+  use 'hrsh7th/cmp-buffer'
+  use 'hrsh7th/cmp-path'
+  use 'L3MON4D3/LuaSnip'
+  use 'saadparwaiz1/cmp_luasnip'
+  use { "catppuccin/nvim", as = "catppuccin" }
+  use { "rose-pine/neovim", as = "rose-pine" }
+  use "folke/tokyonight.nvim"
+  use "EdenEast/nightfox.nvim"
+  use "rebelot/kanagawa.nvim"
+  use "sainnhe/gruvbox-material"
+  use "sainnhe/everforest"
+  use "morhetz/gruvbox"
+  use { "dracula/vim", as = "dracula" }
+  use "ayu-theme/ayu-vim"
+  use "shaunsingh/nord.nvim"
+  use "lunarvim/darkplus.nvim"
+  use "Mofiqul/vscode.nvim"
+  use "marko-cerovac/material.nvim"
+  use "projekt0n/github-nvim-theme"
+  use "yashguptaz/calvera-dark.nvim"
+  use "olivercederborg/poimandres.nvim"
+  use { "bluz71/vim-nightfly-colors", as = "nightfly" }
+  use "tomasr/molokai"
+  use "jacoborus/tender.vim"
+  use "savq/melange-nvim"
+  use { "pineapplegiant/spaceduck", as = "spaceduck" }
+  use "rmehri01/onenord.nvim"
+  use "AlexvZyl/nordic.nvim"
+  use "ellisonleao/gruvbox.nvim"
+  use "NTBBloodbath/doom-one.nvim"
+  use "oxfist/night-owl.nvim"
+  use "drewtempelmeyer/palenight.vim"
+  use "Shatur/neovim-ayu"
   use {
-  'nvim-lualine/lualine.nvim',
-  requires = { 'nvim-tree/nvim-web-devicons', opt = true }
-	}
-
-  use {
-  'folke/which-key.nvim',
-  config = function()
-    require('which-key').setup {}
-  end
-	}
-  use {
-  'devkvlt/floaty.nvim',
-  config = function()
-    require('floaty').setup({
-      runners = {
-        python = 'python3 {}',
-        lua = 'lua {}',
-        -- Add more language runners as needed
-      }
-    })
-  end
+    'nvim-telescope/telescope.nvim', tag = '0.1.8',
+    requires = { {'nvim-lua/plenary.nvim'} }
   }
-
-
+  use 'nvim-lualine/lualine.nvim'
   use {
-  'CRAG666/code_runner.nvim',
-  requires = 'CRAG666/betterTerm.nvim',
-  config = function()
-    require('code_runner').setup({
-      mode = 'float', -- Use floating window for output
-      filetype = {
-        python = "python3 -u",
-        c = "gcc -o $fileNameWithoutExt $fileName && ./$fileNameWithoutExt",
-        -- Add other filetypes as needed
-      },
-    })
-  end
- }
-
-
+    'folke/which-key.nvim',
+    config = function()
+      require('which-key').setup {}
+    end
+  }
   use {
-  'Pocco81/auto-save.nvim',
-  config = function()
-    require('auto-save').setup({
-      -- Your configuration options here
-    })
-  end
-	}
-
+    'devkvlt/floaty.nvim',
+    config = function()
+      require('floaty').setup({
+        runners = {
+          python = 'python3 {}',
+          lua = 'lua {}',
+        }
+      })
+    end
+  }
+  use {
+    'CRAG666/code_runner.nvim',
+    requires = 'CRAG666/betterTerm.nvim',
+    config = function()
+      require('code_runner').setup({
+        mode = 'float',
+        filetype = {
+          python = "python3 -u",
+          c = "gcc -o $fileNameWithoutExt && ./$fileNameWithoutExt",
+        },
+      })
+    end
+  }
+  use {
+    'Pocco81/auto-save.nvim',
+    config = function()
+      require('auto-save').setup({})
+    end
+  }
 end)
 
-
-vim.api.nvim_create_autocmd("BufWinEnter", {
-  pattern = "*",
+vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
-    if vim.api.nvim_win_get_config(0).relative ~= "" then
-      vim.api.nvim_buf_set_keymap(0, 'n', 'q', ':close<CR>', { noremap = true, silent = true })
+    if vim.fn.argv(0) == '.' then
+      require('telescope.builtin').find_files()
     end
-  end,
+  end
 })
 
-
-
 local wk = require("which-key")
-
 wk.register({
   f = {
-    name = "file", -- Group name displayed by which-key
+    name = "file",
     f = { ":Telescope find_files<CR>", "Find File" },
     r = { ":Telescope oldfiles<CR>", "Open Recent File" },
     n = { ":enew<CR>", "New File" },
@@ -110,57 +111,11 @@ wk.register({
   },
 }, { prefix = "<leader>" })
 
-
-
-require('auto-save').setup({
-  enabled = true, -- Start auto-save when the plugin is loaded
-  execution_message = {
-    message = function()
-      return ("AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"))
-    end,
-    dim = 0.18, -- Dim the color of the message
-    cleaning_interval = 1250, -- Message cleaning interval in milliseconds
-  },
-  trigger_events = {"InsertLeave", "TextChanged"}, -- Events that trigger auto-save
-  debounce_delay = 135, -- Delay before saving in milliseconds
-  condition = function(buf)
-    local fn = vim.fn
-    local utils = require("auto-save.utils.data")
-    if
-      fn.getbufvar(buf, "&modifiable") == 1 and
-      utils.not_in(fn.getbufvar(buf, "&filetype"), {}) then
-      return true -- met condition(s), can save
-    end
-    return false -- can't save
-  end,
-  write_all_buffers = false, -- Write all buffers when the current one meets the condition
-  on_off_commands = true, -- Create commands `ASToggle`, `ASOn`, and `ASOff`
-  clean_command_line_interval = 0, -- Interval for cleaning command line
-  debounce_delay = 135 -- Delay before save in milliseconds
-})
-
-
-require('lualine').setup({
-  options = {
-    theme = 'onedark',
-    section_separators = { left = '', right = '' },
-    component_separators = { left = '', right = '' },
-  }
-})
-
-
--- LSP Setup
 local lspconfig = require('lspconfig')
-
--- Python LSP using pyright
 lspconfig.pyright.setup{}
-
--- C/C++ LSP using clangd
 lspconfig.clangd.setup{}
 
--- Setup nvim-cmp for autocompletion
 local cmp = require'cmp'
-
 cmp.setup({
   snippet = {
     expand = function(args)
@@ -168,12 +123,12 @@ cmp.setup({
     end,
   },
   mapping = {
-    ['<C-S-Space>'] = cmp.mapping.complete(),  -- trigger completion
-    ['<Up>']    = cmp.mapping.select_prev_item(),  -- select previous item
-    ['<Down>']  = cmp.mapping.select_next_item(),  -- select next item
+    ['<C-S-Space>'] = cmp.mapping.complete(),
+    ['<Up>']    = cmp.mapping.select_prev_item(),
+    ['<Down>']  = cmp.mapping.select_next_item(),
     ['<Tab>']   = cmp.mapping.select_next_item(),
     ['<S-Tab>'] = cmp.mapping.select_prev_item(),
-    ['<CR>']    = cmp.mapping.confirm({ select = true }), -- confirm selection
+    ['<CR>']    = cmp.mapping.confirm({ select = true }),
   },
   sources = {
     { name = 'nvim_lsp' },
@@ -183,71 +138,49 @@ cmp.setup({
   },
 })
 
-
-vim.api.nvim_set_keymap('n', 'j', 'h', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'k', 'j', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'l', 'k', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', ';', 'l', { noremap = true, silent = true })
-
 vim.api.nvim_create_augroup("file_saved_group", { clear = true })
-
 vim.api.nvim_create_autocmd("BufWritePost", {
   group = "file_saved_group",
-  pattern = "*", -- Applies to all files, adjust as needed
+  pattern = "*",
   callback = function()
     print("File saved!")
   end,
 })
 
-
--- Create a custom `:Run` command to execute the current file and show the output
 vim.api.nvim_create_user_command('Run', function()
-  local file = vim.fn.expand('%')  -- Get the current file's path
-  local filetype = vim.bo.filetype -- Get the filetype to decide how to run it
-
+  local file = vim.fn.expand('%')
+  local filetype = vim.bo.filetype
   local output = ""
-
-  -- Run different commands based on the file type
   if filetype == 'python' then
-    -- If it's a Python file, run it with `python3` and capture the output
     output = vim.fn.system('python3 ' .. file)
   elseif filetype == 'c' then
-    -- If it's a C file, compile and run it using gcc
-    local exe = file:match("(.+)%..+$")  -- Get file name without extension
-    vim.fn.system('gcc ' .. file .. ' -o ' .. exe)  -- Compile the C file
-    output = vim.fn.system(exe)  -- Run the compiled executable
+    local exe = file:match("(.+)%..+$")
+    vim.fn.system('gcc ' .. file .. ' -o ' .. exe)
+    output = vim.fn.system(exe)
   else
     output = "Unsupported file type: " .. filetype
   end
-
-  -- Print the output (or error) in the command line
   print(output)
 end, {})
 
-vim.cmd.colorscheme("onedark")
-vim.api.nvim_set_keymap('i', '<C-Space>', '<Esc>', { noremap = true, silent = true })
-
-
-
-
 function RunFile()
-  local file = vim.fn.expand('%')  -- Get the current file's path
-  local filetype = vim.bo.filetype   -- Get the filetype
-  local cmd = nil
+  local file = vim.fn.expand('%')
+  local filetype = vim.bo.filetype
+  local cmd = nil  
 
   if filetype == 'python' then
-    cmd = { 'python3', file }
+    cmd = 'python3 ' .. file
   elseif filetype == 'lua' then
-    cmd = { 'lua', file }
+    cmd = 'lua ' .. file
+  elseif filetype == 'c' then
+    local exe = vim.fn.expand('%:r')
+    cmd = 'gcc ' .. file .. ' -o ' .. exe .. ' && ./' .. exe
   else
     print('No runner defined for filetype: ' .. filetype)
     return
   end
 
-  -- Create a new buffer for the terminal
   local buf = vim.api.nvim_create_buf(false, true)
-
-  -- Floating window dimensions and position
   local width = math.ceil(vim.o.columns * 0.8)
   local height = math.ceil(vim.o.lines * 0.5)
   local row = math.ceil((vim.o.lines - height) / 2)
@@ -262,20 +195,73 @@ function RunFile()
     col = col,
     border = 'rounded',
   }
-  
-  -- Open the floating window
-  vim.api.nvim_open_win(buf, true, opts)
-  
-  -- Run the command in an interactive terminal within the buffer
+
+  local win = vim.api.nvim_open_win(buf, true, opts)
+
+  -- Map 'q' to close the window
+  vim.api.nvim_buf_set_keymap(buf, 'n', 'q', '<cmd>bd!<CR>', { noremap = true, silent = true })
+
   vim.fn.termopen(cmd, { cwd = vim.fn.getcwd() })
-  
-  -- Optional: set the buffer to terminal mode so you can interact with it
   vim.cmd("startinsert")
 end
 
-vim.api.nvim_set_keymap('n', '<Leader>r', ':lua RunFile()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<c-space>', ':lua RunFile()<cr>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'y', ':+y', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'yy', ':+yy', { noremap = true, silent = true })
 
+local themes = {
+  "catppuccin", "rose-pine", "tokyonight", "nightfox", "kanagawa", "gruvbox-material",
+  "everforest", "gruvbox", "dracula", "ayu", "nord", "darkplus", "vscode",
+  "material", "github_dark", "calvera", "poimandres", "nightfly", "molokai",
+  "tender", "melange", "spaceduck", "onenord", "nordic", "doom-one", "night-owl",
+  "palenight", "ayu",
+}
 
+math.randomseed(os.time())
+local theme = themes[math.random(#themes)]
+
+if theme == "github_dark" then
+  require("github-theme").setup({ theme_style = "dark" })
+elseif theme == "ayu" then
+  vim.g.ayucolor = "dark"
+  vim.cmd("colorscheme ayu")
+else
+  vim.cmd("colorscheme " .. theme)
+end
+
+vim.notify("Random theme: " .. theme)
+
+local lualine_ok, lualine = pcall(require, "lualine")
+if lualine_ok then
+  local lualine_themes = {
+    ["gruvbox-material"] = "gruvbox",
+    ["everforest"] = "everforest",
+    ["darkplus"] = "onedark",
+    ["github_dark"] = "auto",
+    ["material"] = "material",
+    ["vscode"] = "vscode",
+    ["ayu"] = "ayu_dark",
+    ["dracula"] = "dracula",
+    ["catppuccin"] = "catppuccin",
+    ["tokyonight"] = "tokyonight",
+    ["nightfox"] = "nightfox",
+    ["kanagawa"] = "kanagawa",
+    ["onedark"] = "onedark",
+    ["nord"] = "nord",
+    ["doom-one"] = "doom-one",
+    ["poimandres"] = "poimandres",
+    ["rose-pine"] = "rose-pine",
+    ["spaceduck"] = "spaceduck",
+    ["onenord"] = "onenord",
+    ["nordic"] = "nordic",
+    ["melange"] = "auto",
+    ["nightfly"] = "nightfly",
+  }
+
+  lualine.setup({
+    options = {
+      theme = lualine_themes[theme] or "auto"
+    }
+  })
+end
 
