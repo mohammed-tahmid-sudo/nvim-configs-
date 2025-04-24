@@ -161,7 +161,7 @@ _G.packer_plugins = {
     url = "https://github.com/lalitmee/cobalt2.nvim"
   },
   ["code_runner.nvim"] = {
-    config = { "\27LJ\2\n±\1\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\2B\0\2\1K\0\1\0\rfiletype\1\0\2\vpython\15python3 -u\6c8gcc -o $fileNameWithoutExt && ./$fileNameWithoutExt\1\0\2\tmode\nfloat\rfiletype\0\nsetup\16code_runner\frequire\0" },
+    config = { "\27LJ\2\n±\1\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\2B\0\2\1K\0\1\0\rfiletype\1\0\2\6c8gcc -o $fileNameWithoutExt && ./$fileNameWithoutExt\vpython\15python3 -u\1\0\2\rfiletype\0\tmode\nfloat\nsetup\16code_runner\frequire\0" },
     loaded = true,
     path = "/home/tahmid/.local/share/nvim/site/pack/packer/start/code_runner.nvim",
     url = "https://github.com/CRAG666/code_runner.nvim"
@@ -206,12 +206,6 @@ _G.packer_plugins = {
     path = "/home/tahmid/.local/share/nvim/site/pack/packer/start/falcon",
     url = "https://github.com/fenetikm/falcon"
   },
-  ["floaty.nvim"] = {
-    config = { "\27LJ\2\nt\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\frunners\1\0\1\frunners\0\1\0\2\vpython\15python3 {}\blua\vlua {}\nsetup\vfloaty\frequire\0" },
-    loaded = true,
-    path = "/home/tahmid/.local/share/nvim/site/pack/packer/start/floaty.nvim",
-    url = "https://github.com/devkvlt/floaty.nvim"
-  },
   ["fluoromachine.nvim"] = {
     loaded = true,
     path = "/home/tahmid/.local/share/nvim/site/pack/packer/start/fluoromachine.nvim",
@@ -221,6 +215,12 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tahmid/.local/share/nvim/site/pack/packer/start/github-nvim-theme",
     url = "https://github.com/projekt0n/github-nvim-theme"
+  },
+  ["gitsigns.nvim"] = {
+    config = { "\27LJ\2\n6\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\rgitsigns\frequire\0" },
+    loaded = true,
+    path = "/home/tahmid/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
+    url = "https://github.com/lewis6991/gitsigns.nvim"
   },
   gruvbox = {
     loaded = true,
@@ -235,7 +235,7 @@ _G.packer_plugins = {
   ["gruvbox.nvim"] = {
     loaded = true,
     path = "/home/tahmid/.local/share/nvim/site/pack/packer/start/gruvbox.nvim",
-    url = "https://github.com/ellisonleao/gruvbox.nvim"
+    url = "https://github.com/sainnhe/gruvbox.nvim"
   },
   ["iceberg.vim"] = {
     loaded = true,
@@ -253,7 +253,7 @@ _G.packer_plugins = {
     url = "https://github.com/rebelot/kanagawa.nvim"
   },
   ["lualine.nvim"] = {
-    config = { "\27LJ\2\nñ\15\0\0\t\0+\0:5\0\0\0006\1\1\0009\1\2\0015\3\n\0005\4\4\0006\5\3\0008\5\5\0\14\0\5\0X\6\1Ä'\5\5\0=\5\3\0045\5\6\0=\5\a\0045\5\b\0=\5\t\4=\4\v\0035\4\r\0004\5\3\0005\6\f\0>\6\1\5=\5\14\0044\5\4\0005\6\15\0>\6\1\0055\6\16\0005\a\18\0005\b\17\0=\b\19\a5\b\20\0=\b\21\a5\b\22\0=\b\23\a=\a\24\0065\a\25\0=\a\26\6>\6\2\0055\6\27\0005\a\28\0=\a\29\0065\a\30\0=\a\26\6>\6\3\5=\5\31\0044\5\3\0005\6 \0>\6\1\5=\5!\0045\5\"\0=\5#\0045\5$\0=\5%\0045\5&\0=\5'\4=\4(\0035\4)\0=\4*\3B\1\2\1K\0\1\0\15extensions\1\2\0\0\rfugitive\rsections\14lualine_z\1\2\0\0\rlocation\14lualine_y\1\2\0\0\rprogress\14lualine_x\1\4\0\0\rencoding\15fileformat\rfiletype\14lualine_c\1\2\1\0\rfilename\tpath\3\1\14lualine_b\1\0\4\nerror\tÔÅó \tinfo\tÔÅ™ \thint\tÔÅö \twarn\tÔÅ± \fsources\1\2\0\0\rnvim_lsp\1\2\2\0\16diagnostics\fsources\0\fsymbols\0\fsymbols\1\0\3\fremoved\6-\nadded\6+\rmodified\6~\15diff_color\fremoved\1\0\1\afg\f#ff6c6b\rmodified\1\0\1\afg\f#ecbe7b\nadded\1\0\3\fremoved\0\nadded\0\rmodified\0\1\0\1\afg\f#98be65\1\2\3\0\tdiff\fsymbols\0\15diff_color\0\fcolored\2\1\2\1\0\vbranch\ticon\bÓú•\14lualine_a\1\0\6\14lualine_a\0\14lualine_y\0\14lualine_z\0\14lualine_x\0\14lualine_c\0\14lualine_b\0\1\2\1\0\tmode\nupper\1\foptions\1\0\3\foptions\0\rsections\0\15extensions\0\25component_separators\1\0\2\nright\bÓÇ≥\tleft\bÓÇ±\23section_separators\1\0\2\nright\bÓÇ≤\tleft\bÓÇ∞\tauto\1\0\4\18icons_enabled\2\25component_separators\0\23section_separators\0\ntheme\0\ntheme\nsetup\flualine\1\0<\vstarry\tauto\bboo\tauto\rcodedark\rcodedark\rnoctishc\tauto\npaper\tauto\16one_monokai\tauto\fmoonfly\fmoonfly\fzenburn\fzenburn\fvimdark\tauto\vrasmus\tauto\fcobalt2\tauto\ncaret\tauto\fvs-code\vvscode\rnightfox\rnightfox\15tokyonight\15tokyonight\vbamboo\vbamboo\bayu\rayu_dark\vvscode\vvscode\rmaterial\rmaterial\14spaceduck\14spaceduck\16github_dark\tauto\fonedark\fonedark\rdarkplus\fonedark\15everforest\15everforest\rnightfly\rnightfly\21gruvbox-material\fgruvbox\vfalcon\tauto\vmellow\tauto\vaurora\tauto\14oxocarbon\tauto\fmelange\tauto\vnordic\vnordic\fonenord\fonenord\15poimandres\15poimandres\fdracula\fdracula\tnord\tnord\rkanagawa\rkanagawa\15hardhacker\tauto\tedge\tedge\rmidnight\tauto\fjuliana\tauto\15citruszest\tauto\14rose-pine\14rose-pine\fsweetie\tauto\15catppuccin\15catppuccin\rdoom-one\rdoom-one\ficeberg\tauto\fsonokai\fsonokai\14tokyodark\14tokyodark\bone\fonedark\nspace\tauto\tdeus\tauto\14min-theme\tauto\vroshni\tauto\16github-dark\tauto\nxcode\tauto\fbluloco\tauto\15codeschool\tauto\18solarized-lua\14solarized\18oxocarbon-lua\tauto\0" },
+    config = { "\27LJ\2\n¢\t\0\0\b\1#\00025\0\0\0006\1\1\0'\3\2\0B\1\2\0029\1\3\0015\3\v\0005\4\4\0-\5\0\0008\5\5\0\14\0\5\0X\6\1Ä'\5\5\0=\5\6\0045\5\a\0=\5\b\0045\5\t\0=\5\n\4=\4\f\0035\4\14\0004\5\3\0005\6\r\0>\6\1\5=\5\15\0044\5\4\0005\6\16\0>\6\1\0055\6\17\0005\a\18\0=\a\19\6>\6\2\0055\6\20\0005\a\21\0=\a\22\6>\6\3\5=\5\23\0044\5\3\0005\6\24\0>\6\1\5=\5\25\0045\5\26\0=\5\27\0045\5\28\0=\5\29\0045\5\30\0=\5\31\4=\4 \0035\4!\0=\4\"\3B\1\2\1K\0\1\0\0\0\15extensions\1\2\0\0\rfugitive\rsections\14lualine_z\1\2\0\0\rlocation\14lualine_y\1\2\0\0\rprogress\14lualine_x\1\4\0\0\rencoding\15fileformat\rfiletype\14lualine_c\1\2\1\0\rfilename\tpath\3\1\14lualine_b\fsources\1\2\0\0\rnvim_lsp\1\2\1\0\16diagnostics\fsources\0\fsymbols\1\0\3\rmodified\6~\fremoved\6-\nadded\6+\1\2\2\0\tdiff\fcolored\2\fsymbols\0\1\2\1\0\vbranch\ticon\bÓú•\14lualine_a\1\0\6\14lualine_b\0\14lualine_y\0\14lualine_x\0\14lualine_a\0\14lualine_c\0\14lualine_z\0\1\2\1\0\tmode\nupper\1\foptions\1\0\3\foptions\0\15extensions\0\rsections\0\25component_separators\1\0\2\tleft\bÓÇ±\nright\bÓÇ≥\23section_separators\1\0\2\tleft\bÓÇ∞\nright\bÓÇ≤\ntheme\tauto\1\0\4\18icons_enabled\2\ntheme\0\25component_separators\0\23section_separators\0\nsetup\flualine\frequire\1\0\20\15everforest\15everforest\fonedark\fonedark\vnordic\vnordic\fonenord\fonenord\14spaceduck\14spaceduck\15poimandres\15poimandres\16github_dark\tauto\rmaterial\rmaterial\vvscode\vvscode\rdarkplus\fonedark\tnord\tnord\bayu\rayu_dark\fdracula\fdracula\rdoom-one\rdoom-one\21gruvbox-material\fgruvbox\rkanagawa\rkanagawa\rnightfox\rnightfox\15tokyonight\15tokyonight\14rose-pine\14rose-pine\15catppuccin\15catppuccin\0" },
     loaded = true,
     path = "/home/tahmid/.local/share/nvim/site/pack/packer/start/lualine.nvim",
     url = "https://github.com/nvim-lualine/lualine.nvim"
@@ -262,11 +262,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tahmid/.local/share/nvim/site/pack/packer/start/material.nvim",
     url = "https://github.com/marko-cerovac/material.nvim"
-  },
-  ["melange-nvim"] = {
-    loaded = true,
-    path = "/home/tahmid/.local/share/nvim/site/pack/packer/start/melange-nvim",
-    url = "https://github.com/savq/melange-nvim"
   },
   ["mellow.nvim"] = {
     loaded = true,
@@ -283,11 +278,6 @@ _G.packer_plugins = {
     path = "/home/tahmid/.local/share/nvim/site/pack/packer/start/min-theme.nvim",
     url = "https://github.com/datsfilipe/min-theme.nvim"
   },
-  molokai = {
-    loaded = true,
-    path = "/home/tahmid/.local/share/nvim/site/pack/packer/start/molokai",
-    url = "https://github.com/tomasr/molokai"
-  },
   ["monokai-pro.nvim"] = {
     loaded = true,
     path = "/home/tahmid/.local/share/nvim/site/pack/packer/start/monokai-pro.nvim",
@@ -303,11 +293,6 @@ _G.packer_plugins = {
     path = "/home/tahmid/.local/share/nvim/site/pack/packer/start/night-owl.nvim",
     url = "https://github.com/oxfist/night-owl.nvim"
   },
-  nightfly = {
-    loaded = true,
-    path = "/home/tahmid/.local/share/nvim/site/pack/packer/start/nightfly",
-    url = "https://github.com/bluz71/vim-nightfly-colors"
-  },
   ["nightfox.nvim"] = {
     loaded = true,
     path = "/home/tahmid/.local/share/nvim/site/pack/packer/start/nightfox.nvim",
@@ -322,11 +307,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tahmid/.local/share/nvim/site/pack/packer/start/nord.nvim",
     url = "https://github.com/shaunsingh/nord.nvim"
-  },
-  ["nordic.nvim"] = {
-    loaded = true,
-    path = "/home/tahmid/.local/share/nvim/site/pack/packer/start/nordic.nvim",
-    url = "https://github.com/AlexvZyl/nordic.nvim"
   },
   ["nvim-cmp"] = {
     loaded = true,
@@ -378,11 +358,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tahmid/.local/share/nvim/site/pack/packer/start/onedark.nvim",
     url = "https://github.com/navarasu/onedark.nvim"
-  },
-  ["onenord.nvim"] = {
-    loaded = true,
-    path = "/home/tahmid/.local/share/nvim/site/pack/packer/start/onenord.nvim",
-    url = "https://github.com/rmehri01/onenord.nvim"
   },
   ["oxocarbon-lua.nvim"] = {
     loaded = true,
@@ -444,11 +419,6 @@ _G.packer_plugins = {
     path = "/home/tahmid/.local/share/nvim/site/pack/packer/start/space-nvim",
     url = "https://github.com/Th3Whit3Wolf/space-nvim"
   },
-  spaceduck = {
-    loaded = true,
-    path = "/home/tahmid/.local/share/nvim/site/pack/packer/start/spaceduck",
-    url = "https://github.com/pineapplegiant/spaceduck"
-  },
   ["starry.nvim"] = {
     loaded = true,
     path = "/home/tahmid/.local/share/nvim/site/pack/packer/start/starry.nvim",
@@ -463,11 +433,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tahmid/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
-  },
-  ["tender.vim"] = {
-    loaded = true,
-    path = "/home/tahmid/.local/share/nvim/site/pack/packer/start/tender.vim",
-    url = "https://github.com/jacoborus/tender.vim"
   },
   ["theme-vim"] = {
     loaded = true,
@@ -493,6 +458,17 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tahmid/.local/share/nvim/site/pack/packer/start/vim-colors-xcode",
     url = "https://github.com/arzg/vim-colors-xcode"
+  },
+  ["vim-floaterm"] = {
+    config = { "\27LJ\2\nª\2\0\0\6\0\15\2\0296\0\0\0009\0\1\0*\1\0\0=\1\2\0006\0\0\0009\0\1\0*\1\1\0=\1\3\0006\0\0\0009\0\1\0'\1\5\0=\1\4\0006\0\0\0009\0\1\0'\1\a\0=\1\6\0006\0\0\0009\0\1\0)\1\1\0=\1\b\0006\0\0\0009\0\t\0009\0\n\0'\2\v\0'\3\f\0'\4\r\0005\5\14\0B\0\5\1K\0\1\0\1\0\2\fnoremap\2\vsilent\2\24:FloatermToggle<CR>\14<leader>t\6n\20nvim_set_keymap\bapi\23floaterm_autoclose\vcenter\22floaterm_position\nfloat\21floaterm_wintype\20floaterm_height\19floaterm_width\6g\bvimµÊÃô\19ô≥¶ˇ\3\1ÄÄÄˇ\3\0" },
+    loaded = true,
+    path = "/home/tahmid/.local/share/nvim/site/pack/packer/start/vim-floaterm",
+    url = "https://github.com/voldikss/vim-floaterm"
+  },
+  ["vim-fugitive"] = {
+    loaded = true,
+    path = "/home/tahmid/.local/share/nvim/site/pack/packer/start/vim-fugitive",
+    url = "https://github.com/tpope/vim-fugitive"
   },
   ["vim-github-dark"] = {
     loaded = true,
@@ -543,26 +519,30 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
+-- Config for: lualine.nvim
+time([[Config for lualine.nvim]], true)
+try_loadstring("\27LJ\2\n¢\t\0\0\b\1#\00025\0\0\0006\1\1\0'\3\2\0B\1\2\0029\1\3\0015\3\v\0005\4\4\0-\5\0\0008\5\5\0\14\0\5\0X\6\1Ä'\5\5\0=\5\6\0045\5\a\0=\5\b\0045\5\t\0=\5\n\4=\4\f\0035\4\14\0004\5\3\0005\6\r\0>\6\1\5=\5\15\0044\5\4\0005\6\16\0>\6\1\0055\6\17\0005\a\18\0=\a\19\6>\6\2\0055\6\20\0005\a\21\0=\a\22\6>\6\3\5=\5\23\0044\5\3\0005\6\24\0>\6\1\5=\5\25\0045\5\26\0=\5\27\0045\5\28\0=\5\29\0045\5\30\0=\5\31\4=\4 \0035\4!\0=\4\"\3B\1\2\1K\0\1\0\0\0\15extensions\1\2\0\0\rfugitive\rsections\14lualine_z\1\2\0\0\rlocation\14lualine_y\1\2\0\0\rprogress\14lualine_x\1\4\0\0\rencoding\15fileformat\rfiletype\14lualine_c\1\2\1\0\rfilename\tpath\3\1\14lualine_b\fsources\1\2\0\0\rnvim_lsp\1\2\1\0\16diagnostics\fsources\0\fsymbols\1\0\3\rmodified\6~\fremoved\6-\nadded\6+\1\2\2\0\tdiff\fcolored\2\fsymbols\0\1\2\1\0\vbranch\ticon\bÓú•\14lualine_a\1\0\6\14lualine_b\0\14lualine_y\0\14lualine_x\0\14lualine_a\0\14lualine_c\0\14lualine_z\0\1\2\1\0\tmode\nupper\1\foptions\1\0\3\foptions\0\15extensions\0\rsections\0\25component_separators\1\0\2\tleft\bÓÇ±\nright\bÓÇ≥\23section_separators\1\0\2\tleft\bÓÇ∞\nright\bÓÇ≤\ntheme\tauto\1\0\4\18icons_enabled\2\ntheme\0\25component_separators\0\23section_separators\0\nsetup\flualine\frequire\1\0\20\15everforest\15everforest\fonedark\fonedark\vnordic\vnordic\fonenord\fonenord\14spaceduck\14spaceduck\15poimandres\15poimandres\16github_dark\tauto\rmaterial\rmaterial\vvscode\vvscode\rdarkplus\fonedark\tnord\tnord\bayu\rayu_dark\fdracula\fdracula\rdoom-one\rdoom-one\21gruvbox-material\fgruvbox\rkanagawa\rkanagawa\rnightfox\rnightfox\15tokyonight\15tokyonight\14rose-pine\14rose-pine\15catppuccin\15catppuccin\0", "config", "lualine.nvim")
+time([[Config for lualine.nvim]], false)
 -- Config for: auto-save.nvim
 time([[Config for auto-save.nvim]], true)
 try_loadstring("\27LJ\2\n;\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\14auto-save\frequire\0", "config", "auto-save.nvim")
 time([[Config for auto-save.nvim]], false)
--- Config for: code_runner.nvim
-time([[Config for code_runner.nvim]], true)
-try_loadstring("\27LJ\2\n±\1\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\2B\0\2\1K\0\1\0\rfiletype\1\0\2\vpython\15python3 -u\6c8gcc -o $fileNameWithoutExt && ./$fileNameWithoutExt\1\0\2\tmode\nfloat\rfiletype\0\nsetup\16code_runner\frequire\0", "config", "code_runner.nvim")
-time([[Config for code_runner.nvim]], false)
--- Config for: floaty.nvim
-time([[Config for floaty.nvim]], true)
-try_loadstring("\27LJ\2\nt\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\frunners\1\0\1\frunners\0\1\0\2\vpython\15python3 {}\blua\vlua {}\nsetup\vfloaty\frequire\0", "config", "floaty.nvim")
-time([[Config for floaty.nvim]], false)
--- Config for: lualine.nvim
-time([[Config for lualine.nvim]], true)
-try_loadstring("\27LJ\2\nñ\15\0\0\t\0+\0:5\0\0\0006\1\1\0009\1\2\0015\3\n\0005\4\4\0006\5\3\0008\5\5\0\14\0\5\0X\6\1Ä'\5\5\0=\5\3\0045\5\6\0=\5\a\0045\5\b\0=\5\t\4=\4\v\0035\4\r\0004\5\3\0005\6\f\0>\6\1\5=\5\14\0044\5\4\0005\6\15\0>\6\1\0055\6\16\0005\a\18\0005\b\17\0=\b\19\a5\b\20\0=\b\21\a5\b\22\0=\b\23\a=\a\24\0065\a\25\0=\a\26\6>\6\2\0055\6\27\0005\a\28\0=\a\29\0065\a\30\0=\a\26\6>\6\3\5=\5\31\0044\5\3\0005\6 \0>\6\1\5=\5!\0045\5\"\0=\5#\0045\5$\0=\5%\0045\5&\0=\5'\4=\4(\0035\4)\0=\4*\3B\1\2\1K\0\1\0\15extensions\1\2\0\0\rfugitive\rsections\14lualine_z\1\2\0\0\rlocation\14lualine_y\1\2\0\0\rprogress\14lualine_x\1\4\0\0\rencoding\15fileformat\rfiletype\14lualine_c\1\2\1\0\rfilename\tpath\3\1\14lualine_b\1\0\4\nerror\tÔÅó \tinfo\tÔÅ™ \thint\tÔÅö \twarn\tÔÅ± \fsources\1\2\0\0\rnvim_lsp\1\2\2\0\16diagnostics\fsources\0\fsymbols\0\fsymbols\1\0\3\fremoved\6-\nadded\6+\rmodified\6~\15diff_color\fremoved\1\0\1\afg\f#ff6c6b\rmodified\1\0\1\afg\f#ecbe7b\nadded\1\0\3\fremoved\0\nadded\0\rmodified\0\1\0\1\afg\f#98be65\1\2\3\0\tdiff\fsymbols\0\15diff_color\0\fcolored\2\1\2\1\0\vbranch\ticon\bÓú•\14lualine_a\1\0\6\14lualine_a\0\14lualine_y\0\14lualine_z\0\14lualine_x\0\14lualine_c\0\14lualine_b\0\1\2\1\0\tmode\nupper\1\foptions\1\0\3\foptions\0\rsections\0\15extensions\0\25component_separators\1\0\2\nright\bÓÇ≥\tleft\bÓÇ±\23section_separators\1\0\2\nright\bÓÇ≤\tleft\bÓÇ∞\tauto\1\0\4\18icons_enabled\2\25component_separators\0\23section_separators\0\ntheme\0\ntheme\nsetup\flualine\1\0<\vstarry\tauto\bboo\tauto\rcodedark\rcodedark\rnoctishc\tauto\npaper\tauto\16one_monokai\tauto\fmoonfly\fmoonfly\fzenburn\fzenburn\fvimdark\tauto\vrasmus\tauto\fcobalt2\tauto\ncaret\tauto\fvs-code\vvscode\rnightfox\rnightfox\15tokyonight\15tokyonight\vbamboo\vbamboo\bayu\rayu_dark\vvscode\vvscode\rmaterial\rmaterial\14spaceduck\14spaceduck\16github_dark\tauto\fonedark\fonedark\rdarkplus\fonedark\15everforest\15everforest\rnightfly\rnightfly\21gruvbox-material\fgruvbox\vfalcon\tauto\vmellow\tauto\vaurora\tauto\14oxocarbon\tauto\fmelange\tauto\vnordic\vnordic\fonenord\fonenord\15poimandres\15poimandres\fdracula\fdracula\tnord\tnord\rkanagawa\rkanagawa\15hardhacker\tauto\tedge\tedge\rmidnight\tauto\fjuliana\tauto\15citruszest\tauto\14rose-pine\14rose-pine\fsweetie\tauto\15catppuccin\15catppuccin\rdoom-one\rdoom-one\ficeberg\tauto\fsonokai\fsonokai\14tokyodark\14tokyodark\bone\fonedark\nspace\tauto\tdeus\tauto\14min-theme\tauto\vroshni\tauto\16github-dark\tauto\nxcode\tauto\fbluloco\tauto\15codeschool\tauto\18solarized-lua\14solarized\18oxocarbon-lua\tauto\0", "config", "lualine.nvim")
-time([[Config for lualine.nvim]], false)
+-- Config for: vim-floaterm
+time([[Config for vim-floaterm]], true)
+try_loadstring("\27LJ\2\nª\2\0\0\6\0\15\2\0296\0\0\0009\0\1\0*\1\0\0=\1\2\0006\0\0\0009\0\1\0*\1\1\0=\1\3\0006\0\0\0009\0\1\0'\1\5\0=\1\4\0006\0\0\0009\0\1\0'\1\a\0=\1\6\0006\0\0\0009\0\1\0)\1\1\0=\1\b\0006\0\0\0009\0\t\0009\0\n\0'\2\v\0'\3\f\0'\4\r\0005\5\14\0B\0\5\1K\0\1\0\1\0\2\fnoremap\2\vsilent\2\24:FloatermToggle<CR>\14<leader>t\6n\20nvim_set_keymap\bapi\23floaterm_autoclose\vcenter\22floaterm_position\nfloat\21floaterm_wintype\20floaterm_height\19floaterm_width\6g\bvimµÊÃô\19ô≥¶ˇ\3\1ÄÄÄˇ\3\0", "config", "vim-floaterm")
+time([[Config for vim-floaterm]], false)
+-- Config for: gitsigns.nvim
+time([[Config for gitsigns.nvim]], true)
+try_loadstring("\27LJ\2\n6\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\rgitsigns\frequire\0", "config", "gitsigns.nvim")
+time([[Config for gitsigns.nvim]], false)
 -- Config for: which-key.nvim
 time([[Config for which-key.nvim]], true)
 try_loadstring("\27LJ\2\n;\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\14which-key\frequire\0", "config", "which-key.nvim")
 time([[Config for which-key.nvim]], false)
+-- Config for: code_runner.nvim
+time([[Config for code_runner.nvim]], true)
+try_loadstring("\27LJ\2\n±\1\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\2B\0\2\1K\0\1\0\rfiletype\1\0\2\6c8gcc -o $fileNameWithoutExt && ./$fileNameWithoutExt\vpython\15python3 -u\1\0\2\rfiletype\0\tmode\nfloat\nsetup\16code_runner\frequire\0", "config", "code_runner.nvim")
+time([[Config for code_runner.nvim]], false)
 
 _G._packer.inside_compile = false
 if _G._packer.needs_bufread == true then
