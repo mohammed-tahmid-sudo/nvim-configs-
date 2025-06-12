@@ -1,5 +1,6 @@
 -- Enhanced Completion Setup with Copilot
 local cmp = require'cmp'
+local lspkind = require('lspkind')
 
 cmp.setup({
   snippet = {
@@ -51,6 +52,61 @@ cmp.setup({
       cmp.config.compare.length,
       cmp.config.compare.order,
     },
+  },
+  formatting = {
+    format = lspkind.cmp_format({
+      mode = 'symbol_text',
+      maxwidth = 50,
+      ellipsis_char = '...',
+      show_labelDetails = true,
+      before = function (entry, vim_item)
+        -- Set source-specific icons and menu text
+        local kind_icons = {
+          Text = '',
+          Method = '',
+          Function = '',
+          Constructor = '',
+          Field = '',
+          Variable = '',
+          Class = '',
+          Interface = '',
+          Module = '',
+          Property = '',
+          Unit = '',
+          Value = '',
+          Enum = '',
+          Keyword = '',
+          Snippet = '',
+          Color = '',
+          File = '',
+          Reference = '',
+          Folder = '',
+          EnumMember = '',
+          Constant = '',
+          Struct = '',
+          Event = '',
+          Operator = '',
+          TypeParameter = '',
+          Copilot = '',
+        }
+        
+        -- Override icon for specific kinds
+        if kind_icons[vim_item.kind] then
+          vim_item.kind = kind_icons[vim_item.kind] .. ' ' .. vim_item.kind
+        end
+        
+        -- Add source name to the completion item
+        vim_item.menu = ({
+          copilot = '[Copilot]',
+          nvim_lsp = '[LSP]',
+          luasnip = '[LuaSnip]',
+          buffer = '[Buffer]',
+          path = '[Path]',
+        })[entry.source.name]
+        
+        return vim_item
+      end
+    })
   },
   window = {
     completion = cmp.config.window.bordered(),
