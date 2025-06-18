@@ -59,49 +59,45 @@ cmp.setup({
       maxwidth = 50,
       ellipsis_char = '...',
       show_labelDetails = true,
+      
+      -- Use the symbol_map from lspkind config
+      symbol_map = {
+        Text = "📝",
+        Method = "🔧", 
+        Function = "⚡",
+        Constructor = "🏗️",
+        Field = "🌾",
+        Variable = "📦",
+        Class = "🏛️",
+        Interface = "🔌",
+        Module = "📚",
+        Property = "🔑",
+        Unit = "📏",
+        Value = "💎",
+        Enum = "🎯",
+        Keyword = "🗝️",
+        Snippet = "✂️",
+        Color = "🎨",
+        File = "📄",
+        Reference = "🔗",
+        Folder = "📁",
+        EnumMember = "🎯",
+        Constant = "🚀",
+        Struct = "🧱",
+        Event = "⚡",
+        Operator = "➕",
+        TypeParameter = "🔤",
+        Copilot = "🤖",
+      },
+      
       before = function (entry, vim_item)
-        -- Set source-specific icons and menu text
-        local kind_icons = {
-          Text = '',
-          Method = '',
-          Function = '',
-          Constructor = '',
-          Field = '',
-          Variable = '',
-          Class = '',
-          Interface = '',
-          Module = '',
-          Property = '',
-          Unit = '',
-          Value = '',
-          Enum = '',
-          Keyword = '',
-          Snippet = '',
-          Color = '',
-          File = '',
-          Reference = '',
-          Folder = '',
-          EnumMember = '',
-          Constant = '',
-          Struct = '',
-          Event = '',
-          Operator = '',
-          TypeParameter = '',
-          Copilot = '',
-        }
-        
-        -- Override icon for specific kinds
-        if kind_icons[vim_item.kind] then
-          vim_item.kind = kind_icons[vim_item.kind] .. ' ' .. vim_item.kind
-        end
-        
         -- Add source name to the completion item
         vim_item.menu = ({
-          copilot = '[Copilot]',
-          nvim_lsp = '[LSP]',
-          luasnip = '[LuaSnip]',
-          buffer = '[Buffer]',
-          path = '[Path]',
+          copilot = '[🤖 Copilot]',
+          nvim_lsp = '[🔧 LSP]',
+          luasnip = '[✂️ Snippet]',
+          buffer = '[📄 Buffer]',
+          path = '[📁 Path]',
         })[entry.source.name]
         
         return vim_item

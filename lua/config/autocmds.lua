@@ -1,10 +1,26 @@
 -- Auto-commands
 
--- Auto-command to open Telescope if starting in a directory
+-- 🔭 Auto-command to open Telescope if starting in a directory 🔭
 vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
-    if vim.fn.argv(0) == '.' then
-      require('telescope.builtin').find_files()
+    local arg = vim.fn.argv(0)
+    
+    -- Check if no arguments (nvim) or if argument is a directory
+    if arg == '' or arg == '.' or (arg and vim.fn.isdirectory(arg) == 1) then
+      -- Small delay to ensure everything is loaded
+      vim.defer_fn(function()
+        -- Check if Telescope is available
+        local ok, telescope = pcall(require, 'telescope.builtin')
+        if ok then
+          telescope.find_files({
+            prompt_title = '🔍 Find Files',
+            find_command = { 'rg', '--files', '--hidden', '--glob', '!**/.git/*' },
+            hidden = true,
+          })
+        else
+          print('📁 Opened directory, but Telescope not available')
+        end
+      end, 100)
     end
   end
 })
