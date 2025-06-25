@@ -37,20 +37,12 @@ return {
   -- 🎨 Code Formatter - conform.nvim 🎨
   {
     'stevearc/conform.nvim',
-    event = { "BufWritePre" },
+    event = { "BufReadPre", "BufNewFile" },
     cmd = { "ConformInfo" },
-    keys = {
-      {
-        "<leader>lf",
-        function()
-          require("conform").format({ async = true, lsp_fallback = true })
-        end,
-        mode = "",
-        desc = "Format buffer",
-      },
-    },
     config = function()
-      require('conform').setup({
+      local conform = require('conform')
+      
+      conform.setup({
         -- 🚀 Formatters by filetype 🚀
         formatters_by_ft = {
           -- 🌐 Web Development
@@ -59,6 +51,7 @@ return {
           javascriptreact = { "prettier" },
           typescriptreact = { "prettier" },
           vue = { "prettier" },
+          svelte = { "prettier" },
           css = { "prettier" },
           scss = { "prettier" },
           less = { "prettier" },
@@ -70,7 +63,7 @@ return {
           graphql = { "prettier" },
           
           -- 🐍 Python
-          python = { "black", "isort" },
+          python = { "isort", "black" },
           
           -- 🌙 Lua
           lua = { "stylua" },
@@ -79,7 +72,7 @@ return {
           rust = { "rustfmt" },
           
           -- 🐹 Go
-          go = { "gofumpt", "goimports" },
+          go = { "goimports", "gofumpt" },
           
           -- 🔧 C/C++
           c = { "clang_format" },
@@ -98,54 +91,83 @@ return {
           sh = { "shfmt" },
           bash = { "shfmt" },
           zsh = { "shfmt" },
+          fish = { "fish_indent" },
           
           -- 📊 Data formats
           xml = { "xmlformat" },
           sql = { "sqlformat" },
+          toml = { "taplo" },
           
           -- 🔤 Other languages
           dart = { "dart_format" },
           kotlin = { "ktlint" },
           swift = { "swift_format" },
+          elixir = { "mix" },
+          zig = { "zigfmt" },
           
-          -- 📝 Fallback for any filetype
-          ["*"] = { "codespell" },
+          -- 📝 Fallback - only whitespace trimming
           ["_"] = { "trim_whitespace" },
         },
         
         -- 💫 Format on save configuration 💫
-        format_on_save = {
-          -- These options will be passed to conform.format()
-          timeout_ms = 500,
-          lsp_fallback = true,
-        },
+        format_on_save = function(bufnr)
+          -- Skip format on save for specific filetypes
+          local disable_filetypes = { "c", "cpp", "sql" }
+          local filetype = vim.bo[bufnr].filetype
+          
+          if vim.tbl_contains(disable_filetypes, filetype) then
+            return
+          end
+          
+          return {
+            timeout_ms = 1000,
+            lsp_fallback = true,
+          }
+        end,
         
         -- 🎯 Custom formatters 🎯
         formatters = {
-          -- Example of customizing a formatter
           prettier = {
-            prepend_args = { "--tab-width", "2" },
+            prepend_args = { "--tab-width", "2", "--single-quote", "true" },
           },
           black = {
-            prepend_args = { "--line-length", "88" },
+            prepend_args = { "--line-length", "88", "--fast" },
           },
           shfmt = {
-            prepend_args = { "-i", "2" },
+            prepend_args = { "-i", "2", "-ci" },
+          },
+          stylua = {
+            prepend_args = { "--indent-type", "Spaces", "--indent-width", "2" },
           },
         },
       })
       
-      -- 🗝️ Additional keymaps 🗝️
+      -- 🗝️ Format keymap - <leader>F 🗝️
       vim.keymap.set({ "n", "v" }, "<leader>F", function()
-        require("conform").format({
+        conform.format({
           lsp_fallback = true,
           async = false,
-          timeout_ms = 1000,
+          timeout_ms = 2000,
         })
-      end, { desc = "Format file or range (in visual mode)" })
+        print("✨ Code formatted!")
+      end, { desc = "📐 Format code" })
       
       -- 📋 Show formatter info
-      vim.keymap.set("n", "<leader>ci", "<cmd>ConformInfo<cr>", { desc = "Show conform info" })
+      vim.keymap.set("n", "<leader>ci", "<cmd>ConformInfo<cr>", { desc = "ℹ️ Show formatter info" })
+      
+      -- 🔧 Format selection in visual mode
+      vim.keymap.set("v", "<leader>f", function()
+        conform.format({
+          lsp_fallback = true,
+          async = false,
+          timeout_ms = 2000,
+          range = {
+            ["start"] = vim.api.nvim_buf_get_mark(0, "<"),
+            ["end"] = vim.api.nvim_buf_get_mark(0, ">"),
+          },
+        })
+        print("✨ Selection formatted!")
+      end, { desc = "📐 Format selection" })
     end,
   },
 }

@@ -35,3 +35,16 @@ vim.api.nvim_create_autocmd("BufWritePost", {
   end,
 })
 
+-- Aggressively disable C-style indenting for C/C++ files
+vim.api.nvim_create_augroup("disable_c_indent", { clear = true })
+vim.api.nvim_create_autocmd({"FileType", "BufEnter", "BufWinEnter"}, {
+  group = "disable_c_indent",
+  pattern = {"c", "cpp", "h", "hpp"},
+  callback = function()
+    vim.bo.cindent = false
+    vim.bo.smartindent = false
+    vim.bo.autoindent = true
+    vim.bo.indentexpr = ""
+  end,
+})
+

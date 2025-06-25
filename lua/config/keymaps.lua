@@ -29,6 +29,21 @@ require("which-key").add({
   silent = true,
 })
 
+-- System clipboard mappings (Wayland compatible)
+-- Paste from system clipboard using leader + p
+vim.keymap.set('n', '<leader>p', '"+p', { noremap = true, silent = true, desc = 'Paste from system clipboard' })
+vim.keymap.set('n', '<leader>P', '"+P', { noremap = true, silent = true, desc = 'Paste before cursor from system clipboard' })
+-- Copy to system clipboard using leader + y
+vim.keymap.set('v', '<leader>y', '"+y', { noremap = true, silent = true, desc = 'Copy to system clipboard' })
+vim.keymap.set('n', '<leader>y', '"+y', { noremap = true, silent = true, desc = 'Copy line to system clipboard' })
+vim.keymap.set('n', '<leader>Y', '"+Y', { noremap = true, silent = true, desc = 'Copy to end of line to system clipboard' })
+
+-- LSP diagnostic keymaps with enhanced icons
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { noremap = true, silent = true, desc = 'Show line diagnostics' })
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { noremap = true, silent = true, desc = 'Go to previous diagnostic' })
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { noremap = true, silent = true, desc = 'Go to next diagnostic' })
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { noremap = true, silent = true, desc = 'Set diagnostic loclist' })
+
 -- Additional key mappings
 vim.api.nvim_set_keymap('n', '<C-Space>', ':lua RunFile()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-h>', 'b', { noremap = true, silent = true })

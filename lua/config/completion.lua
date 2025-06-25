@@ -56,49 +56,29 @@ cmp.setup({
   formatting = {
     format = lspkind.cmp_format({
       mode = 'symbol_text',
-      maxwidth = 50,
-      ellipsis_char = '...',
+      maxwidth = 60,
+      ellipsis_char = '…',
       show_labelDetails = true,
       
-      -- Use the symbol_map from lspkind config
-      symbol_map = {
-        Text = "📝",
-        Method = "🔧", 
-        Function = "⚡",
-        Constructor = "🏗️",
-        Field = "🌾",
-        Variable = "📦",
-        Class = "🏛️",
-        Interface = "🔌",
-        Module = "📚",
-        Property = "🔑",
-        Unit = "📏",
-        Value = "💎",
-        Enum = "🎯",
-        Keyword = "🗝️",
-        Snippet = "✂️",
-        Color = "🎨",
-        File = "📄",
-        Reference = "🔗",
-        Folder = "📁",
-        EnumMember = "🎯",
-        Constant = "🚀",
-        Struct = "🧱",
-        Event = "⚡",
-        Operator = "➕",
-        TypeParameter = "🔤",
-        Copilot = "🤖",
-      },
-      
+      -- Enhanced formatting with better icons
       before = function (entry, vim_item)
-        -- Add source name to the completion item
+        -- Add source name with enhanced icons
         vim_item.menu = ({
-          copilot = '[🤖 Copilot]',
-          nvim_lsp = '[🔧 LSP]',
-          luasnip = '[✂️ Snippet]',
-          buffer = '[📄 Buffer]',
-          path = '[📁 Path]',
+          copilot = '󰚩  [Copilot]',
+          nvim_lsp = '  [LSP]',
+          luasnip = '󰩫  [Snippet]',
+          buffer = '  [Buffer]',
+          path = '  [Path]',
         })[entry.source.name]
+        
+        -- Add file type icons for file-related completions
+        if entry.source.name == 'path' then
+          local devicons = require('nvim-web-devicons')
+          local icon = devicons.get_icon(vim_item.word)
+          if icon then
+            vim_item.kind = icon .. ' ' .. vim_item.kind
+          end
+        end
         
         return vim_item
       end

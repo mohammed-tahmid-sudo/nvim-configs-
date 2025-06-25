@@ -1,6 +1,6 @@
 -- UI and interface plugins
 return {
-  -- 📑 Beautiful tab/buffer line with file icons 📑
+  -- Beautiful tab/buffer line with file icons
   {
     'akinsho/bufferline.nvim',
     version = "*",
@@ -18,43 +18,49 @@ return {
           left_mouse_command = "buffer %d",
           middle_mouse_command = nil,
           
-          -- 🎨 Essential visual settings
+          -- Optimized visual settings for better icon spacing
           indicator = {
-            icon = '▎',
+            icon = ' ▎',
             style = 'icon',
           },
-          buffer_close_icon = '✗',
-          modified_icon = '●',
-          close_icon = '',
-          left_trunc_marker = '',
-          right_trunc_marker = '',
+          buffer_close_icon = ' ',
+          modified_icon = ' ●',
+          close_icon = ' ',
+          left_trunc_marker = ' ',
+          right_trunc_marker = ' ',
           
-          -- 📁 DISABLE ICONS
-          show_buffer_icons = false,
-          show_buffer_close_icons = false,
-          show_close_icon = false,
+          -- Enhanced icon display
+          show_buffer_icons = true,
+          show_buffer_close_icons = true,
+          show_close_icon = true,
           show_tab_indicators = true,
           
-          -- 🏷️ Simple tab behavior
-          separator_style = "thin",
+          -- Better tab spacing for larger icons
+          separator_style = "slope",
           always_show_bufferline = true,
+          tab_size = 22,  -- Increased for better icon display
+          max_name_length = 20,  -- Slightly increased
+          truncate_names = true,
           
-          -- 🎯 Enable diagnostics
+          -- Enhanced diagnostics with proper spacing
           diagnostics = "nvim_lsp",
           diagnostics_update_in_insert = false,
           diagnostics_indicator = function(count, level)
             local icon = level:match("error") and " " or " "
-            return " " .. icon .. count
+            return icon .. count
           end,
           
-          -- 🎨 DISABLE COLOR ICONS
-          color_icons = false,
-          
-          -- Custom icon handling
+          -- Enhanced color icons
+          color_icons = true,
           get_element_icon = function(element)
             local devicons = require('nvim-web-devicons')
             local icon, hl = devicons.get_icon(element.name, element.extension, { default = true })
             return icon, hl
+          end,
+          
+          -- Custom formatting for better visual consistency
+          name_formatter = function(opts)
+            return opts.name:gsub("%.%w+$", "")
           end,
         }
       })
@@ -276,49 +282,22 @@ return {
           icons_enabled      = true,
         },
         sections = {
-          lualine_a = { 
-            { 
-              'mode', 
-              upper = false,
-              fmt = function(str)
-                local mode_map = {
-                  ['NORMAL'] = '🚀 ' .. str,
-                  ['INSERT'] = '✏️ ' .. str,
-                  ['VISUAL'] = '👁️ ' .. str,
-                  ['V-LINE'] = '📝 ' .. str,
-                  ['V-BLOCK'] = '🧱 ' .. str,
-                  ['COMMAND'] = '⚡ ' .. str,
-                  ['SELECT'] = '🎯 ' .. str,
-                  ['S-LINE'] = '📋 ' .. str,
-                  ['S-BLOCK'] = '🗃️ ' .. str,
-                  ['REPLACE'] = '🔄 ' .. str,
-                  ['V-REPLACE'] = '🔃 ' .. str,
-                  ['EX'] = '⚙️ ' .. str,
-                  ['MORE'] = '➕ ' .. str,
-                  ['CONFIRM'] = '✅ ' .. str,
-                  ['SHELL'] = '🐚 ' .. str,
-                  ['TERM'] = '💻 ' .. str,
-                }
-                return mode_map[str] or '🌟 ' .. str
-              end
-            } 
-          },
+          lualine_a = { 'mode' },
           lualine_b = {
-            { 
-              'branch', 
-              icon = '🌿',
+            {
+              'branch',
+              icon = ' ',
               fmt = function(str)
-                if str == '' then return '🚫 No Branch' end
-                return '🌿 ' .. str
+                return str:len() > 15 and str:sub(1, 15) .. '…' or str
               end
             },
-            { 
-              'diff', 
-              colored = true, 
-              symbols = { 
-                added = '✅ ', 
-                modified = '🔄 ', 
-                removed = '❌ ' 
+            {
+              'diff',
+              colored = true,
+              symbols = {
+                added = ' ',
+                modified = ' ',
+                removed = ' '
               },
               diff_color = {
                 added = { fg = '#98be65' },
@@ -326,14 +305,14 @@ return {
                 removed = { fg = '#ff6c6b' },
               },
             },
-            { 
-              'diagnostics', 
+            {
+              'diagnostics',
               sources = { 'nvim_lsp' },
               symbols = {
-                error = '🚨 ',
-                warn = '⚠️ ',
-                info = 'ℹ️ ',
-                hint = '💡 '
+                error = ' ',
+                warn = ' ',
+                info = ' ',
+                hint = ' '
               },
               diagnostics_color = {
                 error = { fg = '#ff6c6b' },
@@ -343,105 +322,66 @@ return {
               },
             },
           },
-          lualine_c = { 
-            { 
-              'filename', 
+          lualine_c = {
+            {
+              'filename',
               path = 1,
               symbols = {
-                modified = ' 📝',
-                readonly = ' 🔒',
-                unnamed = '📄 Untitled',
-                newfile = '✨ New',
+                modified = ' ●',
+                readonly = ' ',
+                unnamed = ' Untitled',
+                newfile = ' New',
               },
               fmt = function(str)
+                -- Add file icon with proper spacing
                 local devicons = require('nvim-web-devicons')
                 local filename = vim.fn.expand('%:t')
                 local extension = vim.fn.expand('%:e')
-                local icon, color = devicons.get_icon(filename, extension, { default = true })
-                if icon then
-                  return icon .. ' ' .. str
+                local icon, _ = devicons.get_icon(filename, extension, { default = true })
+                if icon and filename ~= '' then
+                  return icon .. '  ' .. str
                 end
-                return '📄 ' .. str
+                return '  ' .. str
               end
-            } 
+            }
           },
-          lualine_x = { 
+          lualine_x = {
             {
               'encoding',
               fmt = function(str)
-                local encoding_icons = {
-                  ['utf-8'] = '🌐 UTF-8',
-                  ['utf-16'] = '🌍 UTF-16',
-                  ['latin1'] = '🇱 Latin1',
-                  ['ascii'] = '🔤 ASCII',
-                }
-                return encoding_icons[str] or '📝 ' .. str
+                return str == 'utf-8' and '' or str
               end
             },
             {
               'fileformat',
-              fmt = function(str)
-                local format_icons = {
-                  unix = '🐧 Unix',
-                  dos = '🪟 DOS',
-                  mac = '🍎 Mac',
-                }
-                return format_icons[str] or '📋 ' .. str
-              end
+              symbols = {
+                unix = ' ',
+                dos = ' ',
+                mac = ' ',
+              }
             },
             {
               'filetype',
-              colored = true,
               icon_only = false,
-              fmt = function(str)
-                local devicons = require('nvim-web-devicons')
-                local filename = vim.fn.expand('%:t')
-                local extension = vim.fn.expand('%:e')
-                local icon, color = devicons.get_icon(filename, extension, { default = true })
-                if icon then
-                  return icon .. ' ' .. str
-                end
-                return '📄 ' .. str
-              end
+              colored = true,
+              icon = { align = 'left' }
             }
           },
-          lualine_y = { 
-            {
-              'progress',
-              fmt = function(str)
-                return '📊 ' .. str
-              end
-            }
-          },
-          lualine_z = { 
+          lualine_y = { 'progress' },
+          lualine_z = {
             {
               'location',
-              fmt = function(str)
-                return '📍 ' .. str
-              end
+              icon = ' ',
             },
             {
               function()
-                local line_count = vim.fn.line('$')
-                if line_count < 1000 then
-                  return '📄 ' .. line_count .. 'L'
-                elseif line_count < 10000 then
-                  return '📖 ' .. line_count .. 'L'
-                else
-                  return '📚 ' .. line_count .. 'L'
-                end
+                return ' ' .. vim.fn.line('$') .. 'L'
               end
             },
             {
               function()
                 local words = vim.fn.wordcount().words or 0
-                if words < 100 then
-                  return '✏️ ' .. words .. 'W'
-                elseif words < 1000 then
-                  return '📝 ' .. words .. 'W'
-                else
-                  return '📖 ' .. words .. 'W'
-                end
+                return '󰈭 ' .. words .. 'W'
               end
             }
           },

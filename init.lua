@@ -7,4 +7,5 @@ require('config.autocmds')
 require('config.keymaps')
 require('config.lsp')
 require('config.completion')
+-- Telescope config is loaded by the plugin itself
 require('config.commands')
