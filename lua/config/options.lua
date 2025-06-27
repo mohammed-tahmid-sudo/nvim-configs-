@@ -26,7 +26,7 @@ vim.opt.softtabstop = 2    -- Number of spaces that a tab counts for while editi
 vim.opt.expandtab = true   -- Use spaces instead of tabs
 vim.opt.autoindent = true  -- Copy indent from current line when starting a new line
 vim.opt.smartindent = true -- Smart autoindenting when starting a new line
-vim.opt.cindent = false    -- Disable C-style automatic indenting
+vim.opt.cindent = true     -- Disable C-style automatic indenting
 
 -- 🎯 Additional Editor Settings 🎯
 vim.opt.wrap = false       -- Don't wrap lines
