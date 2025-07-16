@@ -91,17 +91,35 @@ local themes = {
   "acme-colors", "mayansmoke", "iosvkem"
 }
 
--- Better random seeding using microseconds for more randomness
-math.randomseed(os.time() * 1000 + (os.clock() * 1000000) % 1000000)
-local theme = themes[math.random(#themes)]
-
--- 30% chance for transparent background
-_G.theme_is_transparent = (math.random() < 0.3)
-if _G.theme_is_transparent then
-  vim.g.transparent_enabled = true
-else
-  vim.g.transparent_enabled = false
+-- Function to check if a theme is available
+local function is_theme_available(theme_name)
+  -- Check if it's a built-in theme
+  local builtin_themes = {
+    "default", "blue", "darkblue", "delek", "desert", "elflord", "evening",
+    "industry", "koehler", "morning", "murphy", "pablo", "peachpuff",
+    "ron", "shine", "slate", "torte", "zellner"
+  }
+  
+  for _, builtin in ipairs(builtin_themes) do
+    if builtin == theme_name then
+      return true
+    end
+  end
+  
+  -- Try to check if theme is installed
+  local success = pcall(function()
+    vim.cmd.colorscheme(theme_name)
+  end)
+  
+  return success
 end
+
+-- Set evening as the default theme (always available)
+local theme = "evening"
+
+-- Enable transparency by default
+_G.theme_is_transparent = true
+vim.g.transparent_enabled = true
 
 -- Store the selected theme globally for other modules to access
 _G.selected_theme = theme
@@ -116,18 +134,10 @@ end
 -- Function to switch theme manually
 function _G.switch_theme(theme_name)
   if theme_name then
-    -- Check if theme exists in our list
-    local found = false
-    for _, t in ipairs(themes) do
-      if t == theme_name then
-        found = true
-        break
-      end
-    end
-    
-    if found then
+    -- Try to apply the theme
+    local success, err = pcall(vim.cmd.colorscheme, theme_name)
+    if success then
       _G.selected_theme = theme_name
-      vim.cmd.colorscheme(theme_name)
       -- Reload lualine with new theme
       if package.loaded['lualine'] then
         package.loaded['lualine'] = nil
@@ -135,18 +145,35 @@ function _G.switch_theme(theme_name)
       end
       print("Switched to theme: " .. theme_name)
     else
-      print("Theme '" .. theme_name .. "' not found in available themes")
+      print("Failed to load theme '" .. theme_name .. "': " .. (err or "unknown error"))
+      print("Available built-in themes: default, blue, darkblue, delek, desert, elflord, evening, industry, koehler, morning, murphy, pablo, peachpuff, ron, shine, slate, torte, zellner")
     end
   else
-    -- Random theme
-    local new_theme = themes[math.random(#themes)]
-    _G.selected_theme = new_theme
-    vim.cmd.colorscheme(new_theme)
-    if package.loaded['lualine'] then
-      package.loaded['lualine'] = nil
-      require('lualine')
+    -- Random theme - try multiple times to find a working one
+    local attempts = 0
+    local max_attempts = 10
+    
+    while attempts < max_attempts do
+      local new_theme = themes[math.random(#themes)]
+      local success, err = pcall(vim.cmd.colorscheme, new_theme)
+      
+      if success then
+        _G.selected_theme = new_theme
+        if package.loaded['lualine'] then
+          package.loaded['lualine'] = nil
+          require('lualine')
+        end
+        print("Randomly switched to theme: " .. new_theme)
+        return
+      end
+      
+      attempts = attempts + 1
     end
-    print("Randomly switched to theme: " .. new_theme)
+    
+    -- If no random theme worked, fall back to evening
+    print("No random theme could be loaded, falling back to evening")
+    _G.selected_theme = "evening"
+    vim.cmd.colorscheme("evening")
   end
 end
 

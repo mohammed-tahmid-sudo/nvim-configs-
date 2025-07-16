@@ -26,10 +26,10 @@ function RunFile()
     cmd = 'FloatermNew --autoclose=1 lua ' .. file
   elseif ft == 'c' then
     local exe = vim.fn.expand('%:r')
-    cmd = 'FloatermNew --autoclose=0 sh -c "gcc ' .. file .. ' -lncurses -lsqlite3 -std=c23 -o ' .. exe .. ' && ./' .. exe .. '"'
+    cmd = 'FloatermNew --autoclose=0 sh -c "gcc ' .. file .. '  -std=c23 -o ' .. exe .. ' && ./' .. exe .. '"'
   elseif ft == 'cpp' then
     local exe = vim.fn.expand('%:r')
-    cmd = 'FloatermNew --autoclose=0 sh -c "g++ ' .. file .. ' -o ' .. exe .. ' && ./' .. exe .. '"'
+    cmd = 'FloatermNew --autoclose=0 sh -c "g++ ' .. file .. '  -Wall -o ' .. exe .. ' && ./' .. exe .. '"'
   elseif ft == 'javascript' then
     cmd = 'FloatermNew --autoclose=0 node ' .. file
   else
