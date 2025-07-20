@@ -114,8 +114,8 @@ local function is_theme_available(theme_name)
   return success
 end
 
--- Set evening as the default theme (always available)
-local theme = "evening"
+-- Set gruvbox as the default theme to match terminal
+local theme = "gruvbox"
 
 -- Enable transparency by default
 _G.theme_is_transparent = true

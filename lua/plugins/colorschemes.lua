@@ -151,7 +151,6 @@ return {
   { "hzchirs/vim-material", lazy = true },
   { "Rigellute/rigel", lazy = true },
   { "connorholyday/vim-snazzy", lazy = true },
-  { "arzg/vim-colors-xcode", lazy = true },
   { "chriskempson/base16-vim", lazy = true },
   { "w0ng/vim-hybrid", lazy = true },
   { "junegunn/seoul256.vim", lazy = true },
@@ -186,7 +185,6 @@ return {
   { "PHSix/nvim-hybrid", lazy = true },
   { "kyazdani42/blue-moon", lazy = true },
   { "mcchrish/zenbones.nvim", lazy = true },
-  { "rebelot/kanagawa.nvim", lazy = true },
   { "FrenzyExists/aquarium-vim", lazy = true },
   
   -- Light themes for variety

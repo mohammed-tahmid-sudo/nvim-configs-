@@ -160,7 +160,7 @@ return {
         show_start = true,
         show_end = false,
         injected_languages = false,
-        highlight = { "Function", "Label" },
+        highlight = { "IblScope" },
         priority = 500,
       },
       exclude = {
@@ -180,6 +180,33 @@ return {
       },
     },
     config = function(_, opts)
+      -- Define custom highlight groups for better compatibility
+      local function setup_highlights()
+        -- Get current background
+        local bg = vim.o.background
+        
+        local highlights = {
+          IblScope = { fg = bg == "dark" and "#61afef" or "#0184bc", bold = true },
+          IblIndent = { fg = bg == "dark" and "#3b4261" or "#c5c5c5" },
+        }
+        
+        -- Apply highlights
+        for group, color in pairs(highlights) do
+          vim.api.nvim_set_hl(0, group, color)
+        end
+      end
+      
+      -- Setup highlights initially
+      setup_highlights()
+      
+      -- Re-setup highlights when colorscheme changes
+      vim.api.nvim_create_autocmd("ColorScheme", {
+        callback = function()
+          vim.defer_fn(setup_highlights, 0)
+        end,
+      })
+      
+      -- Setup indent-blankline with our custom highlights
       require("ibl").setup(opts)
     end,
   },
