@@ -117,6 +117,7 @@
   "rigel": { "branch": "master", "commit": "d5b881432f5f243d3880e659437030930781f9a4" },
   "rose-pine": { "branch": "main", "commit": "f93360149e9ed4df8677fbb07c7231ea0fd03b97" },
   "roshnivim-cs": { "branch": "main", "commit": "94e77787c0380fed9944e6f57c3db00e79d69fdb" },
+  "schemastore.nvim": { "branch": "main", "commit": "c957914d75b4a008ce09f4116e57e59fe6e3fae1" },
   "seoul256.vim": { "branch": "master", "commit": "d9a91d8d4e153274e1ecc0ceb05c37f0d0de84d7" },
   "solarized.nvim": { "branch": "master", "commit": "fe02ed49cc017cc93657bd6306a2624394611c69" },
   "sonokai": { "branch": "master", "commit": "5baf26496047788dc000e9287e5ceb7420b2f42e" },

@@ -129,6 +129,79 @@ lspconfig.clangd.setup{
   },
 }
 
+-- Web Development LSP Servers
+
+-- HTML LSP
+lspconfig.html.setup{
+  capabilities = capabilities,
+  on_attach = on_attach,
+  filetypes = { "html", "htmldjango" },
+  init_options = {
+    configurationSection = { "html", "css", "javascript" },
+    embeddedLanguages = {
+      css = true,
+      javascript = true
+    },
+    provideFormatter = true
+  }
+}
+
+-- CSS LSP
+lspconfig.cssls.setup{
+  capabilities = capabilities,
+  on_attach = on_attach,
+  settings = {
+    css = {
+      validate = true,
+      lint = {
+        unknownAtRules = "ignore"
+      }
+    },
+    scss = {
+      validate = true,
+      lint = {
+        unknownAtRules = "ignore"
+      }
+    },
+    less = {
+      validate = true,
+      lint = {
+        unknownAtRules = "ignore"
+      }
+    }
+  }
+}
+
+-- JavaScript/TypeScript LSP
+lspconfig.ts_ls.setup{
+  capabilities = capabilities,
+  on_attach = on_attach,
+  filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+  init_options = {
+    preferences = {
+      disableSuggestions = false,
+    }
+  }
+}
+
+-- Emmet LSP for HTML/CSS shortcuts
+lspconfig.emmet_ls.setup{
+  capabilities = capabilities,
+  on_attach = on_attach,
+  filetypes = { "html", "css", "scss", "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte" }
+}
+
+-- JSON LSP
+lspconfig.jsonls.setup{
+  capabilities = capabilities,
+  on_attach = on_attach,
+  settings = {
+    json = {
+      schemas = require('schemastore').json.schemas(),
+      validate = { enable = true },
+    },
+  },
+}
+
 -- Add more LSP servers if needed
 -- lspconfig.lua_ls.setup{ capabilities = capabilities, on_attach = on_attach }
--- lspconfig.tsserver.setup{ capabilities = capabilities, on_attach = on_attach }

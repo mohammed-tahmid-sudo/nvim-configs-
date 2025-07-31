@@ -10,6 +10,9 @@ return {
   { "saadparwaiz1/cmp_luasnip" },
   { "onsails/lspkind.nvim" },
   
+  -- JSON schemas for better JSON support
+  { "b0o/schemastore.nvim" },
+  
   -- Copilot
   {
     "zbirenbaum/copilot.lua",
