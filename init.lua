@@ -31,6 +31,7 @@ require("lazy").setup({
 	spec = {
 
 		{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true, opts = ... },
+
 		{
 			"tpope/vim-dispatch",
 			cmd = { "Make", "Dispatch" },
@@ -314,3 +315,12 @@ vim.keymap.set("n", "<leader>r", function()
 		print("No runner for filetype: " .. ft)
 	end
 end, { desc = "Run current file or make" })
+
+vim.api.nvim_create_autocmd("InsertLeave", {
+	pattern = "*",
+	callback = function()
+		if vim.bo.modified and vim.bo.filetype ~= "" and vim.fn.expand("%") ~= "" then
+			vim.cmd("silent! write")
+		end
+	end,
+})
