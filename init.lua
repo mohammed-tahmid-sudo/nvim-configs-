@@ -275,7 +275,7 @@ vim.keymap.set("n", "<leader>m", function()
 	vim.cmd("FloatermNew --title=make make")
 end, { desc = "Run make in Floaterm" })
 
-vim.keymap.set("n", "<leader>r", function()
+vim.keymap.set("n", "<C-space>", function()
 	local ft = vim.bo.filetype
 	local file = vim.fn.expand("%")
 	local filename_no_ext = vim.fn.expand("%:r")
