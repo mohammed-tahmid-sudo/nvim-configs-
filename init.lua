@@ -31,6 +31,11 @@ require("lazy").setup({
 	spec = {
 
 		{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true, opts = ... },
+		{
+			"tpope/vim-dispatch",
+			cmd = { "Make", "Dispatch" },
+		},
+
 		{ "voldikss/vim-floaterm" },
 		{
 			"stevearc/conform.nvim",
@@ -264,3 +269,46 @@ end)
 vim.keymap.set("n", "<leader>t", function()
 	vim.cmd(":FloatermNew")
 end)
+
+vim.keymap.set("n", "<leader>m", function()
+	vim.cmd("FloatermNew --title=make make")
+end, { desc = "Run make in Floaterm" })
+
+vim.keymap.set("n", "<leader>r", function()
+	local ft = vim.bo.filetype
+	local file = vim.fn.expand("%")
+	local filename_no_ext = vim.fn.expand("%:r")
+	local has_makefile = vim.fn.filereadable("Makefile") == 1 or vim.fn.filereadable("makefile") == 1
+
+	if ft == "c" or ft == "cpp" then
+		if has_makefile then
+			vim.cmd("FloatermNew --title=make make")
+		else
+			if ft == "c" then
+				vim.cmd(
+					"FloatermNew --autoclose=0 --title=cc gcc "
+						.. file
+						.. " -o "
+						.. filename_no_ext
+						.. " && ./"
+						.. filename_no_ext
+				)
+			else -- cpp
+				vim.cmd(
+					"FloatermNew --autoclose=0 --title=cpp g++ "
+						.. file
+						.. " -o "
+						.. filename_no_ext
+						.. " && ./"
+						.. filename_no_ext
+				)
+			end
+		end
+	elseif ft == "python" then
+		vim.cmd("FloatermNew --title=python python3 " .. file)
+	elseif ft == "java" then
+		vim.cmd('FloatermNew --title=java sh -c "javac ' .. file .. " && java " .. filename_no_ext .. '"')
+	else
+		print("No runner for filetype: " .. ft)
+	end
+end, { desc = "Run current file or make" })
