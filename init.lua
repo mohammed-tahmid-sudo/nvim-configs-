@@ -29,6 +29,31 @@ vim.g.maplocalleader = "\\"
 -- Setup lazy.nvim
 require("lazy").setup({
 	spec = {
+		{
+			"Pocco81/auto-save.nvim",
+			config = function()
+				require("auto-save").setup({
+					enabled = true,
+					execution_message = {
+						message = function()
+							return ("AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"))
+						end,
+						dim = 0.18,
+						cleaning_interval = 1250,
+					},
+					trigger_events = { "InsertLeave", "TextChanged" },
+					condition = function(buf)
+						local fn = vim.fn
+						local utils = require("auto-save.utils.data")
+
+						return fn.getbufvar(buf, "&modifiable") == 1
+							and not utils.in_table(fn.getbufvar(buf, "&filetype"), {})
+					end,
+					write_all_buffers = false,
+					debounce_delay = 135,
+				})
+			end,
+		},
 
 		{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true, opts = ... },
 
@@ -315,13 +340,3 @@ vim.keymap.set("n", "<C-space>", function()
 		print("No runner for filetype: " .. ft)
 	end
 end, { desc = "Run current file or make" })
-
-vim.api.nvim_create_autocmd("InsertLeave", {
-	pattern = "*",
-	callback = function()
-		if vim.bo.modified and vim.bo.filetype ~= "" and vim.fn.expand("%") ~= "" then
-			vim.cmd("silent! write")
-			print("File Saved")
-		end
-	end,
-})
