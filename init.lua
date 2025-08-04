@@ -282,7 +282,7 @@ vim.keymap.set("n", "<leader>r", function()
 
 	if ft == "c" or ft == "cpp" then
 		if has_makefile then
-			vim.cmd("FloatermNew --title=make make")
+			vim.cmd("FloatermNew --autoclose=0 --title=make make run")
 		else
 			if ft == "c" then
 				vim.cmd(
