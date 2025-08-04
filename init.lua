@@ -321,6 +321,7 @@ vim.api.nvim_create_autocmd("InsertLeave", {
 	callback = function()
 		if vim.bo.modified and vim.bo.filetype ~= "" and vim.fn.expand("%") ~= "" then
 			vim.cmd("silent! write")
+			print("File Saved")
 		end
 	end,
 })
