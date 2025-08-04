@@ -308,6 +308,8 @@ vim.keymap.set("n", "<leader>r", function()
 		vim.cmd("FloatermNew --title=python python3 " .. file)
 	elseif ft == "java" then
 		vim.cmd('FloatermNew --title=java sh -c "javac ' .. file .. " && java " .. filename_no_ext .. '"')
+	elseif ft == "lua" then
+		vim.cmd('FloatermNew --title=Lua sh -c "lua ' .. file)
 	else
 		print("No runner for filetype: " .. ft)
 	end
