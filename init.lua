@@ -1,5 +1,10 @@
 vim.wo.number = true
 vim.wo.relativenumber = true 
+vim.keymap.set('n', '<C-l>', ':tabnext<CR>')
+vim.keymap.set('n', '<C-h>', ':tabprevious<CR>')
+
+
+
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -107,9 +112,17 @@ require("lazy").setup({
     -- C-k: Toggle signature help (if signature.enabled = true)
     --
     -- See :h blink-cmp-config-keymap for defining your own keymap
-    -- keymap = 'super-tab',
-    -- keymap = 'enter',
-    keympa = 'default',
+    
+-- keymaps = "super-tab",
+    keymap = {
+      preset = "none",  -- override defaults entirely
+      ["<CR>"]     = { "accept",          "fallback" },                    -- Enter commits snippet or completion
+      ["<Tab>"]    = { "snippet_forward", "select_next",   "fallback" }, -- Tab → snippet jump or next item
+      ["<C-Tab>"]  = { "snippet_backward","select_prev",   "fallback" }, -- Ctrl‑Tab → prev item/jump
+      ["<Esc>"] = { "hide", "fallback" },
+
+    },
+    completion = { list = { selection = "manual" } },
 
     appearance = {
       -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
