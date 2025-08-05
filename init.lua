@@ -44,10 +44,22 @@ require("lazy").setup({
 					trigger_events = { "InsertLeave", "TextChanged" },
 					condition = function(buf)
 						local fn = vim.fn
-						local utils = require("auto-save.utils.data")
+						-- Check if buffer is modifiable and not in excluded filetypes
+						local excluded_filetypes = {}
+						local current_filetype = fn.getbufvar(buf, "&filetype")
+
+						-- Simple helper function to check if value is in table
+						local function is_in_table(value, table)
+							for _, v in ipairs(table) do
+								if v == value then
+									return true
+								end
+							end
+							return false
+						end
 
 						return fn.getbufvar(buf, "&modifiable") == 1
-							and not utils.in_table(fn.getbufvar(buf, "&filetype"), {})
+							and not is_in_table(current_filetype, excluded_filetypes)
 					end,
 					write_all_buffers = false,
 					debounce_delay = 135,
@@ -66,10 +78,10 @@ require("lazy").setup({
 		{
 			"stevearc/conform.nvim",
 			opts = {
-				format_on_save = {
-					timeout_ms = 500,
-					lsp_fallback = true,
-				},
+				-- format_on_save = {
+				-- 	timeout_ms = 500,
+				-- 	lsp_fallback = true,
+				-- },
 				formatters_by_ft = {
 					lua = { "stylua" },
 					python = { "black" },
