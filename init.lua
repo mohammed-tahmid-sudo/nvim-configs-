@@ -29,6 +29,16 @@ vim.g.maplocalleader = "\\"
 -- Setup lazy.nvim
 require("lazy").setup({
 	spec = {
+        {
+  "nvim-treesitter/nvim-treesitter",
+  build = ":TSUpdate",
+  config = function()
+    require("nvim-treesitter.configs").setup {
+      ensure_installed = { "lua", "python", "cpp" },
+      highlight = { enable = true },
+    }
+  end
+}, 
 		{
 			"Pocco81/auto-save.nvim",
 			config = function()
@@ -49,7 +59,7 @@ require("lazy").setup({
 						local current_filetype = fn.getbufvar(buf, "&filetype")
 
 						-- Simple helper function to check if value is in table
-						local function is_in_table(value, table)
+					local function is_in_table(value, table)
 							for _, v in ipairs(table) do
 								if v == value then
 									return true
@@ -65,7 +75,9 @@ require("lazy").setup({
 					debounce_delay = 135,
 				})
 			end,
+
 		},
+                {'brianhuster/live-preview.nvim'}, 
 
 		{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true, opts = ... },
 
@@ -84,12 +96,14 @@ require("lazy").setup({
 				-- },
 				formatters_by_ft = {
 					lua = { "stylua" },
-					python = { "black" },
+					python = { "black" } ,
 					c = { "clang-format" },
 					cpp = { "clang-format" },
 					javascript = { "prettier" },
 					typescript = { "prettier" },
 					java = { "google-java-format" },
+                                        html = { "prettier" },
+                                        css = { "prettier" }
 					-- Add more
 				},
 			},
@@ -343,7 +357,7 @@ vim.keymap.set("n", "<C-space>", function()
 			end
 		end
 	elseif ft == "python" then
-		vim.cmd("FloatermNew --title=python python3 " .. file)
+		vim.cmd("FloatermNew --autoclose=0 --title=python python3 " .. file)
 	elseif ft == "java" then
 		vim.cmd('FloatermNew --title=java sh -c "javac ' .. file .. " && java " .. filename_no_ext .. '"')
 	elseif ft == "lua" then
@@ -352,3 +366,128 @@ vim.keymap.set("n", "<C-space>", function()
 		print("No runner for filetype: " .. ft)
 	end
 end, { desc = "Run current file or make" })
+
+ -- 8-space indentation for all files
+vim.opt.tabstop = 8
+vim.opt.shiftwidth = 8
+vim.opt.softtabstop = 8
+vim.opt.expandtab = true
+
+-- Optional: force it for Lua specifically
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "lua",
+    callback = function()
+        vim.bo.tabstop = 8
+        vim.bo.shiftwidth = 8
+        vim.bo.softtabstop = 8
+        vim.bo.expandtab = true
+    end,
+})
+              
+-- Optional: force it for Lua specifically
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "python",
+    callback = function()
+        vim.bo.tabstop = 8
+        vim.bo.shiftwidth = 8
+        vim.bo.softtabstop = 8
+        vim.bo.expandtab = true
+    end,
+})
+              
+              -- put after your lazy setup (or replace your lspconfig plugin block)
+-- ensure mason + mason-lspconfig installed via lazy and then add this snippet
+
+local lspconfig = require("lspconfig")
+local util = require("lspconfig.util")
+local blink = require("blink.cmp")
+
+local function get_python_path(workspace)
+  -- prefer VIRTUAL_ENV, CONDA_PREFIX, .venv, venv, fallback to system python
+  if vim.env.VIRTUAL_ENV and vim.env.VIRTUAL_ENV ~= "" then
+    return vim.env.VIRTUAL_ENV .. "/bin/python"
+  end
+  local conda = os.getenv("CONDA_PREFIX")
+  if conda and conda ~= "" then return conda .. "/bin/python" end
+  local function try(p)
+    local m = vim.fn.glob(workspace .. "/" .. p)
+    if m ~= "" then return m .. "/bin/python" end
+  end
+  return try(".venv") or try("venv") or vim.fn.exepath("python3") ~= "" and vim.fn.exepath("python3") or vim.fn.exepath("python")
+end
+
+-- default handler used below
+local function setup_server(name, config)
+  config = config or {}
+  config.capabilities = blink.get_lsp_capabilities(config.capabilities or {})
+  lspconfig[name].setup(config)
+end
+
+-- mason-lspconfig bootstrap (if you use mason)
+pcall(function()
+  require("mason-lspconfig").setup({ ensure_installed = { "pyright", "lua_ls" } })
+end)
+
+-- pyright with project venv detection + useful settings
+setup_server("pyright", {
+  before_init = function(_, config)
+    config.settings = config.settings or {}
+    config.settings.python = config.settings.python or {}
+    config.settings.python.pythonPath = get_python_path(config.root_dir or vim.loop.cwd())
+  end,
+  settings = {
+    python = {
+      analysis = {
+        autoSearchPaths = true,
+        useLibraryCodeForTypes = true,
+        diagnosticMode = "workspace",
+        extraPaths = { "src" }, -- add project package dirs if needed
+      },
+    },
+  },
+  root_dir = function(fname)
+    return util.root_pattern("pyproject.toml", "setup.cfg", "setup.py", "requirements.txt", ".git")(fname) or util.path.dirname(fname)
+  end,
+})
+
+-- keep lua_ls as before
+setup_server("lua_ls", { settings = {} })
+
+require('livepreview.config').set()
+local lspconfig = require("lspconfig")
+local blink = require("blink.cmp")
+local util = require("lspconfig.util")
+
+local function setup_server(name, config)
+  config = config or {}
+  config.capabilities = blink.get_lsp_capabilities(config.capabilities or {})
+  lspconfig[name].setup(config)
+end
+
+-- clangd setup
+setup_server("clangd", {
+  cmd = { "clangd", "--background-index", "--clang-tidy", "--completion-style=detailed" },
+  filetypes = { "c", "cpp", "objc", "objcpp" },
+  root_dir = function(fname)
+    return util.root_pattern("compile_commands.json", "compile_flags.txt", ".git")(fname) or util.path.dirname(fname)
+  end,
+  -- optional: additional flags
+  init_options = {
+    clangdFileStatus = true, -- show file status in LSP
+  },
+  settings = {
+    clangd = {
+      fallbackFlags = { "-std=c++20" }, -- fallback flags if no compile_commands.json
+    },
+  },
+})
+
+-- HTML
+lspconfig.html.setup({
+  capabilities = require("cmp_nvim_lsp").default_capabilities(), -- if using nvim-cmp
+})
+
+-- CSS
+lspconfig.cssls.setup({
+  capabilities = require("cmp_nvim_lsp").default_capabilities(),
+})
