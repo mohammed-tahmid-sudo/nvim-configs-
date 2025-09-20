@@ -29,22 +29,22 @@ vim.g.maplocalleader = "\\"
 -- Setup lazy.nvim
 require("lazy").setup({
 	spec = {
-	{
-  "nvim-treesitter/nvim-treesitter",
-  build = ":TSUpdate",
-  config = function()
-    require("nvim-treesitter.configs").setup({
-      ensure_installed = { "lua", "python", "javascript", "c", "cpp" }, -- add languages you need
-      sync_install = false,
-      auto_install = true,
-      highlight = {
-        enable = true,              -- enable syntax highlighting
-        additional_vim_regex_highlighting = false,
-      },
-      indent = { enable = true },   -- smarter indentation
-    })
-  end,
-},
+		{
+			"nvim-treesitter/nvim-treesitter",
+			build = ":TSUpdate",
+			config = function()
+				require("nvim-treesitter.configs").setup({
+					ensure_installed = { "lua", "python", "javascript", "c", "cpp" }, -- add languages you need
+					sync_install = false,
+					auto_install = true,
+					highlight = {
+						enable = true, -- enable syntax highlighting
+						additional_vim_regex_highlighting = false,
+					},
+					indent = { enable = true }, -- smarter indentation
+				})
+			end,
+		},
 		{
 			"Pocco81/auto-save.nvim",
 			config = function()
@@ -134,27 +134,58 @@ require("lazy").setup({
 				},
 			},
 		},
+		-- {
+		-- 	"neovim/nvim-lspconfig",
+		-- 	dependencies = { "saghen/blink.cmp" },
+		--
+		-- 	opts = {
+		-- 		servers = {
+		-- 			lua_ls = {},
+		-- 		},
+		-- 	},
+		--
+		-- 	config = function(_, opts)
+		-- 		local blink = require("blink.cmp")
+		-- 		-- local lspconfig = require("lspconfig")
+		--
+		-- 		for server, config in pairs(opts.servers) do
+		-- 			config.capabilities = blink.get_lsp_capabilities(config.capabilities)
+		-- 			lspconfig[server].setup(config)
+		-- 		end
+		-- 	end,
+		-- },
 		{
 			"neovim/nvim-lspconfig",
 			dependencies = { "saghen/blink.cmp" },
-
 			opts = {
 				servers = {
 					lua_ls = {},
 				},
 			},
-
 			config = function(_, opts)
 				local blink = require("blink.cmp")
-				local lspconfig = require("lspconfig")
 
-				for server, config in pairs(opts.servers) do
-					config.capabilities = blink.get_lsp_capabilities(config.capabilities)
-					lspconfig[server].setup(config)
+				-- Check if we're on Neovim 0.11+ with the new LSP config system
+				if vim.lsp.config then
+					-- New method for Neovim 0.11+
+					for server, config in pairs(opts.servers) do
+						-- Get capabilities from blink.cmp
+						config.capabilities = blink.get_lsp_capabilities(config.capabilities or {})
+
+						-- Set up server using the new vim.lsp.config API
+						vim.lsp.config(server, config)
+						vim.lsp.enable(server)
+					end
+				else
+					-- Fallback for older Neovim versions
+					local lspconfig = require("lspconfig")
+					for server, config in pairs(opts.servers) do
+						config.capabilities = blink.get_lsp_capabilities(config.capabilities or {})
+						lspconfig[server].setup(config)
+					end
 				end
 			end,
 		},
-
 		{ "mason-org/mason.nvim", config = true },
 		{ "mason-org/mason-lspconfig.nvim", config = true },
 		{ "hrsh7th/nvim-cmp", event = "InsertEnter" },
