@@ -261,7 +261,9 @@ require("lazy").setup({
 				},
 
 				-- (Default) Only show the documentation popup when manually triggered
-				completion = { documentation = { auto_show = false } },
+				-- completion = { documentation = { auto_show = false } },
+
+				completion = { documentation = { auto_show = true } },
 
 				-- Default list of enabled providers defined so that you can extend it
 				-- elsewhere in your config, without redefining it, due to `opts_extend`
@@ -390,11 +392,11 @@ vim.keymap.set("n", "<C-space>", function()
 			end
 		end
 	elseif ft == "python" then
-		vim.cmd("FloatermNew --title=python python3 " .. file)
+		vim.cmd("FloatermNew --autoclose=0 --title=python python3 " .. file)
 	elseif ft == "java" then
-		vim.cmd('FloatermNew --title=java sh -c "javac ' .. file .. " && java " .. filename_no_ext .. '"')
+		vim.cmd('FloatermNew --autoclose=0 --title=java sh -c "javac ' .. file .. " && java " .. filename_no_ext .. '"')
 	elseif ft == "lua" then
-		vim.cmd('FloatermNew --title=Lua sh -c "lua ' .. file)
+		vim.cmd('FloatermNew --autoclose=0 --title=Lua sh -c "lua ' .. file)
 	else
 		print("No runner for filetype: " .. ft)
 	end
