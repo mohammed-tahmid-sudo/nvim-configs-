@@ -249,7 +249,7 @@ require("lazy").setup({
 					preset = "none", -- override defaults entirely
 					["<CR>"] = { "accept", "fallback" }, -- Enter commits snippet or completion
 					["<Tab>"] = { "snippet_forward", "select_next", "fallback" }, -- Tab → snippet jump or next item
-					["<C-Tab>"] = { "snippet_backward", "select_prev", "fallback" }, -- Ctrl‑Tab → prev item/jump
+					["<S-Tab>"] = { "snippet_backward", "select_prev", "fallback" }, -- Ctrl‑Tab → prev item/jump
 					["<Esc>"] = { "hide", "fallback" },
 				},
 				completion = { list = { selection = "manual" } },
