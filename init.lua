@@ -34,7 +34,7 @@ require("lazy").setup({
 			build = ":TSUpdate",
 			config = function()
 				require("nvim-treesitter.configs").setup({
-					ensure_installed = { "lua", "python", "javascript", "c", "cpp" }, -- add languages you need
+					ensure_installed = { "lua", "python", "javascript", "c", "cpp", "asm"}, -- add languages you need
 					sync_install = false,
 					auto_install = true,
 					highlight = {
@@ -160,6 +160,7 @@ require("lazy").setup({
 			opts = {
 				servers = {
 					lua_ls = {},
+					asm_lsp = {},    -- <---- add this
 				},
 			},
 			config = function(_, opts)
@@ -401,3 +402,8 @@ vim.keymap.set("n", "<C-space>", function()
 		print("No runner for filetype: " .. ft)
 	end
 end, { desc = "Run current file or make" })
+
+require("mason-lspconfig").setup({
+  ensure_installed = { "asm-lsp", "lua_ls", --[[other servers]] }
+})
+
