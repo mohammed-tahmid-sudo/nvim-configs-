@@ -196,7 +196,14 @@ require("lazy").setup({
 		{
 			"glepnir/lspsaga.nvim",
 			config = function()
-				require("lspsaga").setup({})
+				require("lspsaga").setup({
+					-- diagnostic = {
+					-- 	on_insert = true,
+					-- 	show_code_action = true,
+					-- 	show_source = true,
+					-- 	show_virtual_text = true, -- inline
+					-- },
+				})
 			end,
 			dependencies = { "nvim-tree/nvim-web-devicons" },
 		},
@@ -204,43 +211,11 @@ require("lazy").setup({
 			"nvim-lualine/lualine.nvim", -- statusline with LSP progress
 			config = true,
 		},
-		-- {
-		-- 	"folke/trouble.nvim", -- diagnostics list
-		-- 	cmd = "TroubleToggle",
-		-- 	dependencies = { "nvim-tree/nvim-web-devicons" },
-		--   	config = function()
-		--   			require("trouble").setup {
-		--     			auto_open = true,   -- open panel when there are diagnostics
-		--     			auto_close = false, -- keep it open
-		--     			use_lsp_diagnostic_signs = true,
-		--   			}
-		-- 			end,
-		-- },
 		{
-			"folke/trouble.nvim",
+			"folke/trouble.nvim", -- diagnostics list
+			cmd = "TroubleToggle",
 			dependencies = { "nvim-tree/nvim-web-devicons" },
-			opts = {
-				position = "right", -- panel on the right
-				height = 25,
-				width = 50,
-				signs = {
-					error = "",
-					warning = "",
-					hint = "",
-					information = "",
-				},
-				modes = {
-					diagnostics = {
-						auto_open = true, -- open panel automatically for diagnostics
-						auto_close = false, -- keep it open
-					},
-				},
-			},
-			keys = {
-				{ "<leader>xx", "<cmd>TroubleToggle<cr>", desc = "Toggle Trouble" },
-				{ "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Workspace Diagnostics" },
-				{ "<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Document Diagnostics" },
-			},
+			config = true,
 		},
 		{
 			"ray-x/lsp_signature.nvim", -- function signatures
@@ -441,3 +416,12 @@ require("mason-lspconfig").setup({
 		"lua_ls", --[[other servers]]
 	},
 })
+
+
+vim.diagnostic.config({
+    virtual_text = { spacing = 2, prefix = "●" },
+    signs = true,
+    underline = true,
+    update_in_insert = true,  -- <-- makes it run while typing
+})
+
