@@ -34,7 +34,7 @@ require("lazy").setup({
 			build = ":TSUpdate",
 			config = function()
 				require("nvim-treesitter.configs").setup({
-					ensure_installed = { "lua", "python", "javascript", "c", "cpp", "asm"}, -- add languages you need
+					ensure_installed = { "lua", "python", "javascript", "c", "cpp", "asm" }, -- add languages you need
 					sync_install = false,
 					auto_install = true,
 					highlight = {
@@ -160,7 +160,7 @@ require("lazy").setup({
 			opts = {
 				servers = {
 					lua_ls = {},
-					asm_lsp = {},    -- <---- add this
+					asm_lsp = {}, -- <---- add this
 				},
 			},
 			config = function(_, opts)
@@ -204,11 +204,43 @@ require("lazy").setup({
 			"nvim-lualine/lualine.nvim", -- statusline with LSP progress
 			config = true,
 		},
+		-- {
+		-- 	"folke/trouble.nvim", -- diagnostics list
+		-- 	cmd = "TroubleToggle",
+		-- 	dependencies = { "nvim-tree/nvim-web-devicons" },
+		--   	config = function()
+		--   			require("trouble").setup {
+		--     			auto_open = true,   -- open panel when there are diagnostics
+		--     			auto_close = false, -- keep it open
+		--     			use_lsp_diagnostic_signs = true,
+		--   			}
+		-- 			end,
+		-- },
 		{
-			"folke/trouble.nvim", -- diagnostics list
-			cmd = "TroubleToggle",
+			"folke/trouble.nvim",
 			dependencies = { "nvim-tree/nvim-web-devicons" },
-			config = true,
+			opts = {
+				position = "right", -- panel on the right
+				height = 25,
+				width = 50,
+				signs = {
+					error = "",
+					warning = "",
+					hint = "",
+					information = "",
+				},
+				modes = {
+					diagnostics = {
+						auto_open = true, -- open panel automatically for diagnostics
+						auto_close = false, -- keep it open
+					},
+				},
+			},
+			keys = {
+				{ "<leader>xx", "<cmd>TroubleToggle<cr>", desc = "Toggle Trouble" },
+				{ "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Workspace Diagnostics" },
+				{ "<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Document Diagnostics" },
+			},
 		},
 		{
 			"ray-x/lsp_signature.nvim", -- function signatures
@@ -404,6 +436,8 @@ vim.keymap.set("n", "<C-space>", function()
 end, { desc = "Run current file or make" })
 
 require("mason-lspconfig").setup({
-  ensure_installed = { "asm-lsp", "lua_ls", --[[other servers]] }
+	ensure_installed = {
+		"asm-lsp",
+		"lua_ls", --[[other servers]]
+	},
 })
-
