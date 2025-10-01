@@ -3,6 +3,9 @@ vim.wo.relativenumber = true
 vim.keymap.set("n", "<C-l>", ":tabnext<CR>")
 vim.keymap.set("n", "<C-h>", ":tabprevious<CR>")
 
+vim.g.sql_type_default = 'sql'
+vim.cmd [[let g:python_sql_highlight = 1]]
+
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -30,11 +33,19 @@ vim.g.maplocalleader = "\\"
 require("lazy").setup({
 	spec = {
 		{
+			"windwp/nvim-autopairs",
+			event = "InsertEnter",
+			config = function()
+				require("nvim-autopairs").setup({})
+			end,
+		},
+
+		{
 			"nvim-treesitter/nvim-treesitter",
 			build = ":TSUpdate",
 			config = function()
 				require("nvim-treesitter.configs").setup({
-					ensure_installed = { "lua", "python", "javascript", "c", "cpp", "asm" }, -- add languages you need
+					ensure_installed = {"sql", "lua", "python", "javascript", "c", "cpp", "asm" }, -- add languages you need
 					sync_install = false,
 					auto_install = true,
 					highlight = {
@@ -412,16 +423,13 @@ end, { desc = "Run current file or make" })
 
 require("mason-lspconfig").setup({
 	ensure_installed = {
-		"asm-lsp",
 		"lua_ls", --[[other servers]]
 	},
 })
 
-
 vim.diagnostic.config({
-    virtual_text = { spacing = 2, prefix = "●" },
-    signs = true,
-    underline = true,
-    update_in_insert = true,  -- <-- makes it run while typing
+	virtual_text = { spacing = 2, prefix = "●" },
+	signs = true,
+	underline = true,
+	update_in_insert = true, -- <-- makes it run while typing
 })
-
