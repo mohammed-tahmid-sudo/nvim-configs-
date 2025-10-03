@@ -3,8 +3,8 @@ vim.wo.relativenumber = true
 vim.keymap.set("n", "<C-l>", ":tabnext<CR>")
 vim.keymap.set("n", "<C-h>", ":tabprevious<CR>")
 
-vim.g.sql_type_default = 'sql'
-vim.cmd [[let g:python_sql_highlight = 1]]
+vim.g.sql_type_default = "sql"
+vim.cmd([[let g:python_sql_highlight = 1]])
 
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -32,6 +32,18 @@ vim.g.maplocalleader = "\\"
 -- Setup lazy.nvim
 require("lazy").setup({
 	spec = {
+
+		{
+			"navarasu/onedark.nvim",
+			priority = 1000, -- make sure to load this before all the other start plugins
+			config = function()
+				require("onedark").setup({
+					style = "darker",
+				})
+				-- Enable theme
+				require("onedark").load()
+			end,
+		},
 		{
 			"windwp/nvim-autopairs",
 			event = "InsertEnter",
@@ -45,7 +57,7 @@ require("lazy").setup({
 			build = ":TSUpdate",
 			config = function()
 				require("nvim-treesitter.configs").setup({
-					ensure_installed = {"sql", "lua", "python", "javascript", "c", "cpp", "asm" }, -- add languages you need
+					ensure_installed = { "sql", "lua", "python", "javascript", "c", "cpp", "asm" }, -- add languages you need
 					sync_install = false,
 					auto_install = true,
 					highlight = {
@@ -302,7 +314,8 @@ require("lazy").setup({
 	},
 	-- Configure any other settings here. See the documentation for more details.
 	-- colorscheme that will be used when installing plugins.
-	install = { colorscheme = { "gruvbox" } },
+	-- install = { colorscheme = { "gruvbox" } },
+
 	-- automatically check for plugin updates
 	checker = { enabled = true },
 })
@@ -311,30 +324,30 @@ require("lazy").setup({
 vim.o.background = "dark" -- or "light" for light mode
 
 -- Default options:
-require("gruvbox").setup({
-	terminal_colors = true, -- add neovim terminal colors
-	undercurl = true,
-	underline = true,
-	bold = true,
-	italic = {
-		strings = true,
-		emphasis = true,
-		comments = true,
-		operators = false,
-		folds = true,
-	},
-	strikethrough = true,
-	invert_selection = false,
-	invert_signs = false,
-	invert_tabline = false,
-	inverse = true, -- invert background for search, diffs, statuslines and errors
-	contrast = "", -- can be "hard", "soft" or empty string
-	palette_overrides = {},
-	overrides = {},
-	dim_inactive = false,
-	transparent_mode = false,
-})
-vim.cmd("colorscheme gruvbox")
+-- require("gruvbox").setup({
+-- 	terminal_colors = true, -- add neovim terminal colors
+-- 	undercurl = true,
+-- 	underline = true,
+-- 	bold = true,
+-- 	italic = {
+-- 		strings = true,
+-- 		emphasis = true,
+-- 		comments = true,
+-- 		operators = false,
+-- 		folds = true,
+-- 	},
+-- 	strikethrough = true,
+-- 	invert_selection = false,
+-- 	invert_signs = false,
+-- 	invert_tabline = false,
+-- 	inverse = true, -- invert background for search, diffs, statuslines and errors
+-- 	contrast = "", -- can be "hard", "soft" or empty string
+-- 	palette_overrides = {},
+-- 	overrides = {},
+-- 	dim_inactive = false,
+-- 	transparent_mode = false,
+-- })
+-- vim.cmd("colorscheme gruvbox")
 
 local wk = require("which-key")
 wk.add({
@@ -391,11 +404,20 @@ vim.keymap.set("n", "<C-space>", function()
 			vim.cmd("FloatermNew --autoclose=0 --title=make make run")
 		else
 			if ft == "c" then
+				-- vim.cmd(
+				-- 	"FloatermNew --autoclose=0 --title=cc gcc "
+				-- 		.. file
+				-- 		.. " -o "
+				-- 		.. filename_no_ext "`sdl2-config --cflags --libs`"
+				-- 		.. " && ./"
+				-- 		.. filename_no_ext
+				-- )
 				vim.cmd(
 					"FloatermNew --autoclose=0 --title=cc gcc "
 						.. file
 						.. " -o "
 						.. filename_no_ext
+						.. " $(sdl2-config --cflags --libs)"
 						.. " && ./"
 						.. filename_no_ext
 				)
@@ -433,3 +455,6 @@ vim.diagnostic.config({
 	underline = true,
 	update_in_insert = true, -- <-- makes it run while typing
 })
+
+-- Lua
+require("onedark").load()
