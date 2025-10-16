@@ -32,6 +32,65 @@ vim.g.maplocalleader = "\\"
 -- Setup lazy.nvim
 require("lazy").setup({
 	spec = {
+		-- -- LSP & Mason
+		-- {
+		-- 	"williamboman/mason.nvim",
+		-- 	config = true,
+		-- },
+		-- {
+		-- 	"williamboman/mason-lspconfig.nvim",
+		-- 	config = function()
+		-- 		require("mason-lspconfig").setup({
+		-- 			ensure_installed = { "html", "cssls" },
+		-- 		})
+		-- 	end,
+		-- },
+		-- {
+		-- 	"neovim/nvim-lspconfig",
+		-- 	config = function()
+		-- 		local lspconfig = require("lspconfig")
+		-- 		local capabilities =
+		-- 			require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+		-- 		lspconfig.html.setup({ capabilities = capabilities })
+		-- 		lspconfig.cssls.setup({ capabilities = capabilities })
+		-- 	end,
+		-- },
+		--
+		-- -- Completion
+		-- {
+		-- 	"hrsh7th/nvim-cmp",
+		-- 	dependencies = {
+		-- 		"hrsh7th/cmp-nvim-lsp",
+		-- 		"hrsh7th/cmp-buffer",
+		-- 		"hrsh7th/cmp-path",
+		-- 		"L3MON4D3/LuaSnip",
+		-- 		"saadparwaiz1/cmp_luasnip",
+		-- 	},
+		-- 	config = function()
+		-- 		local cmp = require("cmp")
+		-- 		local luasnip = require("luasnip")
+		-- 		cmp.setup({
+		-- 			snippet = {
+		-- 				expand = function(args)
+		-- 					luasnip.lsp_expand(args.body)
+		-- 				end,
+		-- 			},
+		-- 			mapping = {
+		-- 				["<C-Space>"] = cmp.mapping.complete(),
+		-- 				["<CR>"] = cmp.mapping.confirm({ select = true }),
+		-- 				["<Tab>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+		-- 				["<S-Tab>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+		-- 			},
+		-- 			sources = cmp.config.sources({
+		-- 				{ name = "nvim_lsp" },
+		-- 				{ name = "luasnip" },
+		-- 			}, {
+		-- 				{ name = "buffer" },
+		-- 				{ name = "path" },
+		-- 			}),
+		-- 		})
+		-- 	end,
+		-- },
 
 		{
 			"navarasu/onedark.nvim",
@@ -458,3 +517,7 @@ vim.diagnostic.config({
 
 -- Lua
 require("onedark").load()
+
+vim.keymap.set('n', '<C-c>', '"+y', { noremap = true, silent = true })
+vim.keymap.set('v', '<C-c>', '"+y', { noremap = true, silent = true })
+
