@@ -32,77 +32,18 @@ vim.g.maplocalleader = "\\"
 -- Setup lazy.nvim
 require("lazy").setup({
 	spec = {
-		-- -- LSP & Mason
-		-- {
-		-- 	"williamboman/mason.nvim",
-		-- 	config = true,
-		-- },
-		-- {
-		-- 	"williamboman/mason-lspconfig.nvim",
-		-- 	config = function()
-		-- 		require("mason-lspconfig").setup({
-		-- 			ensure_installed = { "html", "cssls" },
-		-- 		})
-		-- 	end,
-		-- },
-		-- {
-		-- 	"neovim/nvim-lspconfig",
-		-- 	config = function()
-		-- 		local lspconfig = require("lspconfig")
-		-- 		local capabilities =
-		-- 			require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
-		-- 		lspconfig.html.setup({ capabilities = capabilities })
-		-- 		lspconfig.cssls.setup({ capabilities = capabilities })
-		-- 	end,
-		-- },
-		--
-		-- -- Completion
-		-- {
-		-- 	"hrsh7th/nvim-cmp",
-		-- 	dependencies = {
-		-- 		"hrsh7th/cmp-nvim-lsp",
-		-- 		"hrsh7th/cmp-buffer",
-		-- 		"hrsh7th/cmp-path",
-		-- 		"L3MON4D3/LuaSnip",
-		-- 		"saadparwaiz1/cmp_luasnip",
-		-- 	},
-		-- 	config = function()
-		-- 		local cmp = require("cmp")
-		-- 		local luasnip = require("luasnip")
-		-- 		cmp.setup({
-		-- 			snippet = {
-		-- 				expand = function(args)
-		-- 					luasnip.lsp_expand(args.body)
-		-- 				end,
-		-- 			},
-		-- 			mapping = {
-		-- 				["<C-Space>"] = cmp.mapping.complete(),
-		-- 				["<CR>"] = cmp.mapping.confirm({ select = true }),
-		-- 				["<Tab>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
-		-- 				["<S-Tab>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
-		-- 			},
-		-- 			sources = cmp.config.sources({
-		-- 				{ name = "nvim_lsp" },
-		-- 				{ name = "luasnip" },
-		-- 			}, {
-		-- 				{ name = "buffer" },
-		-- 				{ name = "path" },
-		-- 			}),
-		-- 		})
-		-- 	end,
-		-- },
 
-		{
-			"navarasu/onedark.nvim",
-			priority = 1000, -- make sure to load this before all the other start plugins
-			config = function()
-				require("onedark").setup({
-					style = "darker",
-				})
-				-- Enable theme
-				require("onedark").load()
-			end,
-		},
+		-- {
+		-- 	"navarasu/onedark.nvim",
+		-- 	priority = 1000, -- make sure to load this before all the other start plugins
+		-- 	config = function()
+		-- 		require("onedark").setup({
+		-- 			style = "darker",
+		-- 		})
+		-- 		-- Enable theme
+		-- 		require("onedark").load()
+		-- 	end,
+		-- },
 		{
 			"windwp/nvim-autopairs",
 			event = "InsertEnter",
@@ -373,7 +314,7 @@ require("lazy").setup({
 	},
 	-- Configure any other settings here. See the documentation for more details.
 	-- colorscheme that will be used when installing plugins.
-	-- install = { colorscheme = { "gruvbox" } },
+	install = { colorscheme = { "gruvbox" } },
 
 	-- automatically check for plugin updates
 	checker = { enabled = true },
@@ -383,30 +324,30 @@ require("lazy").setup({
 vim.o.background = "dark" -- or "light" for light mode
 
 -- Default options:
--- require("gruvbox").setup({
--- 	terminal_colors = true, -- add neovim terminal colors
--- 	undercurl = true,
--- 	underline = true,
--- 	bold = true,
--- 	italic = {
--- 		strings = true,
--- 		emphasis = true,
--- 		comments = true,
--- 		operators = false,
--- 		folds = true,
--- 	},
--- 	strikethrough = true,
--- 	invert_selection = false,
--- 	invert_signs = false,
--- 	invert_tabline = false,
--- 	inverse = true, -- invert background for search, diffs, statuslines and errors
--- 	contrast = "", -- can be "hard", "soft" or empty string
--- 	palette_overrides = {},
--- 	overrides = {},
--- 	dim_inactive = false,
--- 	transparent_mode = false,
--- })
--- vim.cmd("colorscheme gruvbox")
+require("gruvbox").setup({
+	terminal_colors = true, -- add neovim terminal colors
+	undercurl = true,
+	underline = true,
+	bold = true,
+	italic = {
+		strings = true,
+		emphasis = true,
+		comments = true,
+		operators = false,
+		folds = true,
+	},
+	strikethrough = true,
+	invert_selection = false,
+	invert_signs = false,
+	invert_tabline = false,
+	inverse = true, -- invert background for search, diffs, statuslines and errors
+	contrast = "", -- can be "hard", "soft" or empty string
+	palette_overrides = {},
+	overrides = {},
+	dim_inactive = false,
+	transparent_mode = false,
+})
+vim.cmd("colorscheme gruvbox")
 
 local wk = require("which-key")
 wk.add({
@@ -516,7 +457,7 @@ vim.diagnostic.config({
 })
 
 -- Lua
-require("onedark").load()
+-- require("onedark").load()
 
 vim.keymap.set('n', '<C-c>', '"+y', { noremap = true, silent = true })
 vim.keymap.set('v', '<C-c>', '"+y', { noremap = true, silent = true })
