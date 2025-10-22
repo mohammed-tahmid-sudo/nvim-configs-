@@ -1,5 +1,13 @@
 vim.wo.number = true
 vim.wo.relativenumber = true
+
+vim.o.tabstop = 4
+vim.bo.tabstop = 4
+vim.o.softtabstop = 4
+vim.o.shiftround = true
+vim.o.shiftwidth = 4
+vim.bo.shiftwidth = 4
+
 vim.keymap.set("n", "<C-l>", ":tabnext<CR>")
 vim.keymap.set("n", "<C-h>", ":tabprevious<CR>")
 
@@ -114,13 +122,28 @@ require("lazy").setup({
 		},
 
 		{ "voldikss/vim-floaterm" },
+		-- {
+		-- 	"stevearc/conform.nvim",
+		-- 	opts = {
+		-- 		-- format_on_save = {
+		-- 		-- 	timeout_ms = 500,
+		-- 		-- 	lsp_fallback = true,
+		-- 		-- },
+		-- 		formatters_by_ft = {
+		-- 			lua = { "stylua" },
+		-- 			python = { "black" },
+		-- 			c = { "clang-format" },
+		-- 			cpp = { "clang-format" },
+		-- 			javascript = { "prettier" },
+		-- 			typescript = { "prettier" },
+		-- 			java = { "google-java-format" },
+		-- 			-- Add more
+		-- 		},
+		-- 	},
+		-- },
 		{
 			"stevearc/conform.nvim",
 			opts = {
-				-- format_on_save = {
-				-- 	timeout_ms = 500,
-				-- 	lsp_fallback = true,
-				-- },
 				formatters_by_ft = {
 					lua = { "stylua" },
 					python = { "black" },
@@ -129,10 +152,21 @@ require("lazy").setup({
 					javascript = { "prettier" },
 					typescript = { "prettier" },
 					java = { "google-java-format" },
-					-- Add more
+				},
+				formatters = {
+					prettier = {
+						prepend_args = { "--tab-width", "4", "--use-tabs", "false" },
+					},
+					clang_format = {
+						prepend_args = { "--style={IndentWidth: 4}" },
+					},
+					stylua = {
+						prepend_args = { "--indent-width", "4" },
+					},
 				},
 			},
 		},
+
 		{
 			"nvim-telescope/telescope.nvim",
 			tag = "0.1.8",
@@ -382,6 +416,50 @@ wk.add({
 
 vim.keymap.set("n", "<leader>F", function()
 	require("conform").format({ async = true })
+	-- require("conform").setup({
+	-- 	-- enable on-save if you want
+	-- 	format_on_save = {
+	-- 		timeout_ms = 500,
+	-- 		lsp_fallback = true,
+	-- 	},
+	--
+	-- 	-- map filetypes to formatter keys
+	-- 	formatters_by_ft = {
+	-- 		lua = { "stylua" },
+	-- 		python = { "black" },
+	-- 		c = { "clang-format" },
+	-- 		cpp = { "clang-format" },
+	-- 		javascript = { "prettier" },
+	-- 		typescript = { "prettier" },
+	-- 		java = { "google-java-format" },
+	-- 	},
+	--
+	-- 	-- explicit formatter definitions (use real cmd + args)
+	-- 	formatters = {
+	-- 		prettier = {
+	-- 			cmd = "prettier",
+	-- 			args = { "--stdin-filepath", "$FILENAME", "--tab-width", "4", "--use-tabs", "false" },
+	-- 		},
+	-- 		["clang-format"] = {
+	-- 			cmd = "clang-format",
+	-- 			-- use -style or a .clang-format file. this sets indent width explicitly:
+	-- 			args = { "-assume-filename=$FILENAME", "-style={IndentWidth:4,TabWidth:4,UseTab:Never}" },
+	-- 		},
+	-- 		stylua = {
+	-- 			cmd = "stylua",
+	-- 			args = { "--stdin-filepath", "$FILENAME", "--indent-type", "Spaces", "--indent-width", "4" },
+	-- 		},
+	-- 		black = {
+	-- 			cmd = "black",
+	-- 			args = { "-", "--quiet" }, -- black uses 4-space by default; keep stdin mode
+	-- 		},
+	-- 		["google-java-format"] = {
+	-- 			cmd = "google-java-format",
+	-- 			args = { "-" },
+	-- 		},
+	-- 	},
+	-- })
+
 	print("Code formatted")
 end)
 
@@ -459,6 +537,5 @@ vim.diagnostic.config({
 -- Lua
 -- require("onedark").load()
 
-vim.keymap.set('n', '<C-c>', '"+y', { noremap = true, silent = true })
-vim.keymap.set('v', '<C-c>', '"+y', { noremap = true, silent = true })
-
+vim.keymap.set("n", "<C-c>", '"+y', { noremap = true, silent = true })
+vim.keymap.set("v", "<C-c>", '"+y', { noremap = true, silent = true })
