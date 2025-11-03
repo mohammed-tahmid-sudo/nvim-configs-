@@ -1,6 +1,5 @@
 vim.wo.number = true
 vim.wo.relativenumber = true
-
 vim.o.tabstop = 4
 vim.bo.tabstop = 4
 vim.o.softtabstop = 4
@@ -40,6 +39,31 @@ vim.g.maplocalleader = "\\"
 -- Setup lazy.nvim
 require("lazy").setup({
 	spec = {
+		{
+			"morhetz/gruvbox",
+			lazy = false,
+			config = function()
+				vim.o.background = "dark"
+				vim.g.gruvbox_contrast_dark = "hard"
+				vim.cmd([[colorscheme gruvbox]])
+				vim.o.termguicolors = true
+			end,
+		},
+		{
+			"nvim-neo-tree/neo-tree.nvim",
+			branch = "v3.x",
+			dependencies = {
+				"nvim-lua/plenary.nvim",
+				"nvim-tree/nvim-web-devicons",
+				"MunifTanjim/nui.nvim",
+			},
+			config = function()
+				require("neo-tree").setup({})
+
+				vim.keymap.set("n", "<leader>e", ":Neotree toggle<CR>")
+				-- Toggle focus between Neo-tree and code
+			end,
+		},
 
 		-- {
 		-- 	"navarasu/onedark.nvim",
@@ -50,6 +74,21 @@ require("lazy").setup({
 		-- 		})
 		-- 		-- Enable theme
 		-- 		require("onedark").load()
+		-- 	end,
+		-- },
+		-- {
+		-- 	"mcchrish/zenbones.nvim",
+		-- 	dependencies = "rktjmp/lush.nvim",
+		-- 	config = function()
+		-- 		vim.cmd("colorscheme zenbones")
+		-- 	end,
+		-- },
+
+		-- {
+		-- 	"rose-pine/neovim",
+		-- 	name = "rose-pine",
+		-- 	config = function()
+		-- 		vim.cmd("colorscheme rose-pine")
 		-- 	end,
 		-- },
 		{
@@ -348,7 +387,7 @@ require("lazy").setup({
 	},
 	-- Configure any other settings here. See the documentation for more details.
 	-- colorscheme that will be used when installing plugins.
-	install = { colorscheme = { "gruvbox" } },
+	-- install = { colorscheme = { "gruvbox" } },
 
 	-- automatically check for plugin updates
 	checker = { enabled = true },
@@ -358,30 +397,30 @@ require("lazy").setup({
 vim.o.background = "dark" -- or "light" for light mode
 
 -- Default options:
-require("gruvbox").setup({
-	terminal_colors = true, -- add neovim terminal colors
-	undercurl = true,
-	underline = true,
-	bold = true,
-	italic = {
-		strings = true,
-		emphasis = true,
-		comments = true,
-		operators = false,
-		folds = true,
-	},
-	strikethrough = true,
-	invert_selection = false,
-	invert_signs = false,
-	invert_tabline = false,
-	inverse = true, -- invert background for search, diffs, statuslines and errors
-	contrast = "", -- can be "hard", "soft" or empty string
-	palette_overrides = {},
-	overrides = {},
-	dim_inactive = false,
-	transparent_mode = false,
-})
-vim.cmd("colorscheme gruvbox")
+-- require("gruvbox").setup({
+-- 	terminal_colors = true, -- add neovim terminal colors
+-- 	undercurl = true,
+-- 	underline = true,
+-- 	bold = true,
+-- 	italic = {
+-- 		strings = true,
+-- 		emphasis = true,
+-- 		comments = true,
+-- 		operators = false,
+-- 		folds = true,
+-- 	},
+-- 	strikethrough = true,
+-- 	invert_selection = false,
+-- 	invert_signs = false,
+-- 	invert_tabline = false,
+-- 	inverse = true, -- invert background for search, diffs, statuslines and errors
+-- 	contrast = "", -- can be "hard", "soft" or empty string
+-- 	palette_overrides = {},
+-- 	overrides = {},
+-- 	dim_inactive = false,
+-- 	transparent_mode = false,
+-- })
+-- vim.cmd("colorscheme gruvbox")
 
 local wk = require("which-key")
 wk.add({
@@ -516,6 +555,56 @@ vim.keymap.set("n", "<C-space>", function()
 		vim.cmd('FloatermNew --autoclose=0 --title=java sh -c "javac ' .. file .. " && java " .. filename_no_ext .. '"')
 	elseif ft == "lua" then
 		vim.cmd('FloatermNew --autoclose=0 --title=Lua sh -c "lua ' .. file)
+	else
+		print("No runner for filetype: " .. ft)
+	end
+end, { desc = "Run current file or make" })
+
+-- vim.keymap.set("n", "<space-space>", function()
+vim.keymap.set("n", "  ", function()
+	local ft = vim.bo.filetype
+	local file = vim.fn.expand("%")
+	local filename_no_ext = vim.fn.expand("%:r")
+	local has_makefile = vim.fn.filereadable("Makefile") == 1 or vim.fn.filereadable("makefile") == 1
+
+	if ft == "c" or ft == "cpp" then
+		-- if has_makefile then
+		-- 	vim.cmd("FloatermNew --autoclose=0 --title=make make run")
+		if ft == "c" then
+			-- vim.cmd(
+			-- 	"FloatermNew --autoclose=0 --title=cc gcc "
+			-- 		.. file
+			-- 		.. " -o "
+			-- 		.. filename_no_ext "`sdl2-config --cflags --libs`"
+			-- 		.. " && ./"
+			-- 		.. filename_no_ext
+			-- )
+			vim.cmd(
+				"FloatermNew --autoclose=0 --title=cc gcc "
+					.. file
+					.. " -o "
+					.. filename_no_ext
+					.. " $(sdl2-config --cflags --libs)"
+					.. " && ./"
+					.. filename_no_ext
+			)
+		else -- cpp
+			vim.cmd(
+				"FloatermNew --autoclose=0 --title=cpp g++ "
+					.. file
+					.. " -o "
+					.. filename_no_ext
+					.. " && ./"
+					.. filename_no_ext
+			)
+			-- end
+		end
+	-- elseif ft == "python" then
+	-- 	vim.cmd("FloatermNew --autoclose=0 --title=python python3 " .. file)
+	-- elseif ft == "java" then
+	-- 	vim.cmd('FloatermNew --autoclose=0 --title=java sh -c "javac ' .. file .. " && java " .. filename_no_ext .. '"')
+	-- elseif ft == "lua" then
+	-- 	vim.cmd('FloatermNew --autoclose=0 --title=Lua sh -c "lua ' .. file)
 	else
 		print("No runner for filetype: " .. ft)
 	end
