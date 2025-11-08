@@ -510,105 +510,168 @@ vim.keymap.set("n", "<leader>m", function()
 	vim.cmd("FloatermNew --title=make make")
 end, { desc = "Run make in Floaterm" })
 
-vim.keymap.set("n", "<C-space>", function()
-	local ft = vim.bo.filetype
-	local file = vim.fn.expand("%")
-	local filename_no_ext = vim.fn.expand("%:r")
-	local has_makefile = vim.fn.filereadable("Makefile") == 1 or vim.fn.filereadable("makefile") == 1
+-- vim.keymap.set("n", "<C-space>", function() local ft = vim.bo.filetype
+-- 	local file = vim.fn.expand("%")
+-- 	local filename_no_ext = vim.fn.expand("%:r")
+-- 	-- local has_makefile = vim.fn.filereadable("build/Makefile") == 1 or vim.fn.filereadable("build/makefile") == 1
+-- 	-- local has_makefile = vim.fn.filereadable("build/Makefile") == 1 or vim.fn.filereadable("build/makefile") == 1
+-- 	-- 
+-- 	if ft == "c" or ft == "cpp" then
+-- 		if has_makefile then
+-- 			vim.cmd("FloatermNew --autoclose=0 --title=make make run")
+-- 		else
+-- 			if ft == "c" then
+-- 				-- vim.cmd(
+-- 				-- 	"FloatermNew --autoclose=0 --title=cc gcc "
+-- 				-- 		.. file
+-- 				-- 		.. " -o "
+-- 				-- 		.. filename_no_ext "`sdl2-config --cflags --libs`"
+-- 				-- 		.. " && ./"
+-- 				-- 		.. filename_no_ext
+-- 				-- )
+-- 				vim.cmd(
+-- 					"FloatermNew --autoclose=0 --title=cc gcc "
+-- 						.. file
+-- 						.. " -o "
+-- 						.. filename_no_ext
+-- 						.. " $(sdl2-config --cflags --libs)"
+-- 						.. " && ./"
+-- 						.. filename_no_ext
+-- 				)
+-- 			else -- cpp
+-- 				vim.cmd(
+-- 					"FloatermNew --autoclose=0 --title=cpp g++ "
+-- 						.. file
+-- 						.. " -o "
+-- 						.. filename_no_ext
+-- 						.. " && ./"
+-- 						.. filename_no_ext
+-- 				)
+-- 			end
+-- 		end
+-- 	elseif ft == "python" then
+-- 		vim.cmd("FloatermNew --autoclose=0 --title=python python3 " .. file)
+-- 	elseif ft == "java" then
+-- 		vim.cmd('FloatermNew --autoclose=0 --title=java sh -c "javac ' .. file .. " && java " .. filename_no_ext .. '"')
+-- 	elseif ft == "lua" then
+-- 		vim.cmd('FloatermNew --autoclose=0 --title=Lua sh -c "lua ' .. file)
+-- 	else
+-- 		print("No runner for filetype: " .. ft)
+-- 	end
+-- end, { desc = "Run current file or make" })
+--
+-- -- vim.keymap.set("n", "<space-space>", function()
+-- vim.keymap.set("n", "  ", function()
+-- 	local ft = vim.bo.filetype
+-- 	local file = vim.fn.expand("%")
+-- 	local filename_no_ext = vim.fn.expand("%:r")
+-- local has_makefile = vim.fn.filereadable("build/Makefile") == 1 or vim.fn.filereadable("build/makefile") == 1
+-- 	if ft == "c" or ft == "cpp" then
+-- 		-- if has_makefile then
+-- 		-- 	vim.cmd("FloatermNew --autoclose=0 --title=make make run")
+-- 		if ft == "c" then
+-- 			-- vim.cmd(
+-- 			-- 	"FloatermNew --autoclose=0 --title=cc gcc "
+-- 			-- 		.. file
+-- 			-- 		.. " -o "
+-- 			-- 		.. filename_no_ext "`sdl2-config --cflags --libs`"
+-- 			-- 		.. " && ./"
+-- 			-- 		.. filename_no_ext
+-- 			-- )
+-- 			vim.cmd(
+-- 				"FloatermNew --autoclose=0 --title=cc gcc "
+-- 					.. file
+-- 					.. " -o "
+-- 					.. filename_no_ext
+-- 					.. " $(sdl2-config --cflags --libs)"
+-- 					.. " && ./"
+-- 					.. filename_no_ext
+-- 			)
+-- 		else -- cpp
+-- 			vim.cmd(
+-- 				"FloatermNew --autoclose=0 --title=cpp g++ "
+-- 					.. file
+-- 					.. " -o "
+-- 					.. filename_no_ext
+-- 					.. " && ./"
+-- 					.. filename_no_ext
+-- 			)
+-- 			-- end
+-- 		end
+-- 	-- elseif ft == "python" then
+-- 	-- 	vim.cmd("FloatermNew --autoclose=0 --title=python python3 " .. file)
+-- 	-- elseif ft == "java" then
+-- 	-- 	vim.cmd('FloatermNew --autoclose=0 --title=java sh -c "javac ' .. file .. " && java " .. filename_no_ext .. '"')
+-- 	-- elseif ft == "lua" then
+-- 	-- 	vim.cmd('FloatermNew --autoclose=0 --title=Lua sh -c "lua ' .. file)
+-- 	else
+-- 		print("No runner for filetype: " .. ft)
+-- 	end
+-- end, { desc = "Run current file or make" })
 
-	if ft == "c" or ft == "cpp" then
-		if has_makefile then
-			vim.cmd("FloatermNew --autoclose=0 --title=make make run")
-		else
-			if ft == "c" then
-				-- vim.cmd(
-				-- 	"FloatermNew --autoclose=0 --title=cc gcc "
-				-- 		.. file
-				-- 		.. " -o "
-				-- 		.. filename_no_ext "`sdl2-config --cflags --libs`"
-				-- 		.. " && ./"
-				-- 		.. filename_no_ext
-				-- )
-				vim.cmd(
-					"FloatermNew --autoclose=0 --title=cc gcc "
-						.. file
-						.. " -o "
-						.. filename_no_ext
-						.. " $(sdl2-config --cflags --libs)"
-						.. " && ./"
-						.. filename_no_ext
-				)
-			else -- cpp
-				vim.cmd(
-					"FloatermNew --autoclose=0 --title=cpp g++ "
-						.. file
-						.. " -o "
-						.. filename_no_ext
-						.. " && ./"
-						.. filename_no_ext
-				)
-			end
-		end
-	elseif ft == "python" then
-		vim.cmd("FloatermNew --autoclose=0 --title=python python3 " .. file)
-	elseif ft == "java" then
-		vim.cmd('FloatermNew --autoclose=0 --title=java sh -c "javac ' .. file .. " && java " .. filename_no_ext .. '"')
-	elseif ft == "lua" then
-		vim.cmd('FloatermNew --autoclose=0 --title=Lua sh -c "lua ' .. file)
-	else
-		print("No runner for filetype: " .. ft)
-	end
-end, { desc = "Run current file or make" })
 
--- vim.keymap.set("n", "<space-space>", function()
-vim.keymap.set("n", "  ", function()
-	local ft = vim.bo.filetype
-	local file = vim.fn.expand("%")
-	local filename_no_ext = vim.fn.expand("%:r")
-	local has_makefile = vim.fn.filereadable("Makefile") == 1 or vim.fn.filereadable("makefile") == 1
 
-	if ft == "c" or ft == "cpp" then
-		-- if has_makefile then
-		-- 	vim.cmd("FloatermNew --autoclose=0 --title=make make run")
-		if ft == "c" then
-			-- vim.cmd(
-			-- 	"FloatermNew --autoclose=0 --title=cc gcc "
-			-- 		.. file
-			-- 		.. " -o "
-			-- 		.. filename_no_ext "`sdl2-config --cflags --libs`"
-			-- 		.. " && ./"
-			-- 		.. filename_no_ext
-			-- )
-			vim.cmd(
-				"FloatermNew --autoclose=0 --title=cc gcc "
-					.. file
-					.. " -o "
-					.. filename_no_ext
-					.. " $(sdl2-config --cflags --libs)"
-					.. " && ./"
-					.. filename_no_ext
-			)
-		else -- cpp
-			vim.cmd(
-				"FloatermNew --autoclose=0 --title=cpp g++ "
-					.. file
-					.. " -o "
-					.. filename_no_ext
-					.. " && ./"
-					.. filename_no_ext
-			)
-			-- end
-		end
-	-- elseif ft == "python" then
-	-- 	vim.cmd("FloatermNew --autoclose=0 --title=python python3 " .. file)
-	-- elseif ft == "java" then
-	-- 	vim.cmd('FloatermNew --autoclose=0 --title=java sh -c "javac ' .. file .. " && java " .. filename_no_ext .. '"')
-	-- elseif ft == "lua" then
-	-- 	vim.cmd('FloatermNew --autoclose=0 --title=Lua sh -c "lua ' .. file)
-	else
-		print("No runner for filetype: " .. ft)
-	end
-end, { desc = "Run current file or make" })
+
+local function find_makefile()
+  -- prefer build/Makefile (searches upwards). fallback to Makefile.
+  local mf = vim.fn.findfile("build/Makefile", ".;")
+  if mf ~= "" then return mf end
+  mf = vim.fn.findfile("Makefile", ".;")
+  if mf ~= "" then return mf end
+  return nil
+end
+
+local function run_in_floaterm(title, cmd)
+  -- run the given shell command in Floaterm (plugin). shell-escape the whole cmd.
+  local flo_cmd = "FloatermNew --autoclose=0 --title=" .. title .. " sh -c " .. vim.fn.shellescape(cmd)
+  vim.cmd(flo_cmd)
+end
+
+local function run_current_file()
+  local ft = vim.bo.filetype
+  local file = vim.fn.expand("%")
+  if file == "" then
+    print("No file to run")
+    return
+  end
+  local name = vim.fn.expand("%:r")
+  local file_esc = vim.fn.shellescape(file)
+  local name_esc = vim.fn.shellescape(name)
+
+  local mf = find_makefile()
+  if mf then
+    local mdir = vim.fn.fnamemodify(mf, ":h")
+    local mdir_esc = vim.fn.shellescape(mdir)
+    -- run make in that directory; keep target 'run' (you can change)
+    -- run_in_floaterm("make", "make -C " .. mdir_esc .. " run")
+		run_in_floaterm("make", "make -s -C " .. mdir_esc .. " run")
+
+    return
+  end
+
+  if ft == "c" then
+    local cmd = string.format("gcc %s -o %s $(sdl2-config --cflags --libs) && ./%s", file_esc, name_esc, name_esc)
+    run_in_floaterm("cc", cmd)
+  elseif ft == "cpp" then
+    local cmd = string.format("g++ %s -o %s && ./%s", file_esc, name_esc, name_esc)
+    run_in_floaterm("cpp", cmd)
+  elseif ft == "python" then
+    run_in_floaterm("python", "python3 " .. file_esc)
+  elseif ft == "java" then
+    -- simple: compile then run by class name (works for single-file small programs)
+    local cmd = string.format("javac %s && java %s", file_esc, name_esc)
+    run_in_floaterm("java", cmd)
+  elseif ft == "lua" then
+    run_in_floaterm("lua", "lua " .. file_esc)
+  else
+    print("No runner for filetype: " .. ft)
+  end
+end
+
+-- mappings: <C-Space> and double-space
+vim.keymap.set("n", "<C-Space>", run_current_file, { desc = "Run current file or make" })
+vim.keymap.set("n", "  ", run_current_file, { desc = "Run current file or make" })
+
 
 require("mason-lspconfig").setup({
 	ensure_installed = {
