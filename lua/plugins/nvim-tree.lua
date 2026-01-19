@@ -23,15 +23,18 @@ return {
       api.tree.toggle({ find_file = true, update_root = true, focus = true })
     end, { noremap = true, silent = true })
 
-    -- Open file in a vertical split with <leader>v
-    vim.keymap.set("n", "<leader>v", function()
-      api.node.open.vertical()
-    end, { noremap = true, silent = true })
+    -- -- Open file in a vertical split with <leader>v
+    -- vim.keymap.set("n", "<leader>v", function()
+    --   api.node.open.vertical()
+    -- end, { noremap = true, silent = true })
 
-    -- Open file in a horizontal split with <leader>h
-    vim.keymap.set("n", "<leader>h", function()
-      api.node.open.horizontal()
-    end, { noremap = true, silent = true })
+    -- -- Open file in a horizontal split with <leader>h
+    -- vim.keymap.set("n", "<leader>h", function()
+    --   api.node.open.horizontal()
+    -- end, { noremap = true, silent = true })
+	-- Lua keymap
+    vim.keymap.set("n", "<leader>fc", ":NvimTreeFocus<CR>")
+
   end,
 }
 

@@ -15,6 +15,8 @@ return {
 			rust = { "rustfmt" },
 			python = { "black" },
 			lua = { "stylua" },
+			javascript = { "prettier" },
+
 		},
 	},
 }

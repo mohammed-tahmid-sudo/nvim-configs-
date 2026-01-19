@@ -3,7 +3,7 @@ return {
 	lazy = false,
 	version = '*',
 	dependencies = { 'nvim-tree/nvim-web-devicons' },
-	config = function ()
+	config = function()
 		local bufferline = require('bufferline')
 		bufferline.setup({
 			options = {
@@ -11,7 +11,7 @@ return {
 				hover = {
 					enabled = true,
 					delay = 200,
-					reveal = {'close'}
+					reveal = { 'close' }
 				},
 				offsets = {
 					{
@@ -27,10 +27,11 @@ return {
 		local map = vim.keymap.set
 		local opts = { noremap = true, silent = true }
 
-		map('n', '<A-Left>', '<cmd>BufferLineCyclePrev<cr>', opts)
-		map('n', '<A-Right>', '<cmd>BufferLineCycleNext<cr>', opts)
-		map('n', '<A-h>', '<cmd>BufferLineCyclePrev<cr>', opts)
-		map('n', '<A-l>', '<cmd>BufferLineCycleNext<cr>', opts)
+		-- map('n', '<A-Left>', '<cmd>BufferLineCyclePrev<cr>', opts)
+		-- map('n', '<A-Right>', '<cmd>BufferLineCycleNext<cr>', opts)
+		-- map('n', '<A-h>', '<cmd>BufferLineCyclePrev<cr>', opts)
+		-- map('n', '<A-l>', '<cmd>BufferLineCycleNext<cr>', opts)
+		vim.keymap.set("n", "<TAB>", ":BufferLineCycleNext<CR>")
+		vim.keymap.set("n", "<S-TAB>", ":BufferLineCyclePrev<CR>")
 	end
 }
-

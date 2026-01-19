@@ -61,6 +61,8 @@ return {
 					run_in_floaterm("java", cmd)
 				elseif ft == "lua" then
 					run_in_floaterm("lua", "lua " .. file_esc)
+				elseif ft == "javascript" then
+					run_in_floaterm("javascript-node", "node " .. file_esc)
 				elseif ft == "rust" then
 					-- try cargo run if Cargo.toml reachable
 					local cargo = fn.findfile("Cargo.toml", ".;")
