@@ -47,7 +47,7 @@ return {
 				end
 
 				if ft == "c" then
-					local cmd = string.format("gcc %s -o %s $(sdl2-config --cflags --libs) && ./%s", file_esc, name_esc,
+					local cmd = string.format("gcc %s -o %s && ./%s", file_esc, name_esc,
 						name_esc)
 					run_in_floaterm("cc", cmd)
 				elseif ft == "cpp" then
@@ -63,6 +63,9 @@ return {
 					run_in_floaterm("lua", "lua " .. file_esc)
 				elseif ft == "javascript" then
 					run_in_floaterm("javascript-node", "node " .. file_esc)
+				elseif ft == "haskell" then
+					local cmd = string.format("ghc %s -o %s && ./%s", file_esc, name_esc, name_esc)
+					run_in_floaterm("haskell", cmd)
 				elseif ft == "rust" then
 					-- try cargo run if Cargo.toml reachable
 					local cargo = fn.findfile("Cargo.toml", ".;")
@@ -78,6 +81,12 @@ return {
 						run_in_floaterm("rust",
 							string.format("rustc %s -o %s && %s", file_esc, fn.shellescape(out), fn.shellescape(out)))
 					end
+				elseif ft == "asm" or ft == "nasm" then
+    local cmd = string.format(
+        "nasm -f elf64 %s -o %s.o && ld %s.o -o %s && ./%s",
+        file_esc, name_esc, name_esc, name_esc, name_esc
+    )
+    run_in_floaterm("asm", cmd)
 				else
 					print("No runner for filetype: " .. ft)
 				end

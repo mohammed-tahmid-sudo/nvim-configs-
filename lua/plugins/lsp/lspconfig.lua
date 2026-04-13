@@ -42,6 +42,7 @@ return {
 				'rust_analyzer',
 				'pylsp',
 				'tsserver', -- JS/TS
+				'asm_lsp',
 			},
 		})
 
@@ -83,11 +84,11 @@ return {
 		})
 		vim.lsp.enable('pylsp')
 
-		vim.lsp.config('asm-lsp', {
+		vim.lsp.config('asm_lsp', {
 			capabilities = capabilities,
-			settings = {
-			}
 		})
+		vim.lsp.enable('asm_lsp')
+
 		-- JavaScript / TypeScript
 		vim.lsp.config('tsserver', {
 			capabilities = capabilities,
@@ -96,6 +97,9 @@ return {
 				javascript = { inlayHints = { includeInlayParameterNameHints = 'all' } },
 			},
 		})
+
 		vim.lsp.enable('tsserver')
+
+
 	end,
 }
